@@ -4,18 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domabeats</title>
+  <!-- Google Fonts Montserrat normal -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      background-color: #000;
-      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      background-color: #000000;
+      color: #000;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      padding: 2rem;
-      min-height: 100vh;
+      padding: 1rem;
+
+      /* Fondo textura desde GitHub */
+      background-image: url('https://raw.githubusercontent.com/tu-usuario/tu-repo/main/fondo-textura.png');
+      background-repeat: repeat;
+      background-size: auto;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+
+    .container {
+      background: #000000cc; /* negro con transparencia para que se vea la textura */
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      box-shadow:
+        0 0 8px rgba(245, 180, 39, 0.3),
+        0 0 20px rgba(245, 180, 39, 0.2),
+        0 0 30px rgba(245, 180, 39, 0.1),
+        0 0 40px rgba(245, 180, 39, 0.1);
     }
 
     .profile-pic {
@@ -23,35 +47,38 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
+      border: 3px solid #F5B427;
       margin-bottom: 1rem;
+      box-shadow: none;
     }
 
     .name {
       font-size: 1.8rem;
-      font-weight: bold;
       margin-bottom: 0.3rem;
+      color: #F5B427;
     }
 
     .subtitle {
       font-size: 1rem;
-      color: #aaa;
+      color: #ccc;
       margin-bottom: 2rem;
     }
 
     .button {
       display: block;
       width: 100%;
-      max-width: 300px;
-      padding: 1rem 2rem;
-      margin: 1rem 0;
+      padding: 1rem 0;
+      margin: 0.7rem 0;
       background-color: #F5B427;
       color: #000;
       text-decoration: none;
-      font-weight: bold;
-      text-align: center;
+      font-weight: 400;
+      font-family: 'Montserrat', sans-serif;
       border-radius: 30px;
       transition: background-color 0.3s, color 0.3s;
+      box-shadow: none;
+      text-transform: none;
+      font-size: 0.8rem;
     }
 
     .button:hover {
@@ -59,34 +86,38 @@
       color: #000;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 420px) {
+      .container {
+        padding: 1.5rem 2rem;
+        max-width: 90%;
+      }
       .button {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
+        font-size: 0.8rem;
+        padding: 0.9rem 0;
       }
     }
   </style>
 </head>
 <body>
 
-  <img src="Fotoparafondoweblinks.jpg" alt="Domabeats" class="profile-pic" />
+  <div class="container">
+    <img src="Fotoparafondoweblinks.jpg" alt="Domabeats" class="profile-pic" />
 
-  <div class="name">Domabeats</div>
-  <div class="subtitle">Audio | Cursos | Formación</div>
+    <div class="name">Domabeats</div>
+    <div class="subtitle">Audio | Cursos | Formación</div>
 
-  <a href="https://go.hotmart.com/M99249770C" class="button" target="_blank">
-    Curso de Producción Musical en FL Studio
-  </a>
+    <a href="https://go.hotmart.com/M99249770C" class="button" target="_blank">
+      Curso de Producción Musical en FL Studio 50%OFF
+    </a>
 
-   <a href="https://wa.link/w1d7e2" class="button" target="_blank">
-    Curso de Producción Musical en FL Studio 50%OFF
-  </a>
-  
-  <a href="https://wa.link/n29wvq" class="button" target="_blank">
-    Curso de Mezcla Online en Vivo
-  </a>
-
-
+    <a href="https://wa.link/v5z9xm" class="button" target="_blank">
+      Curso de Mezcla Online en Vivo
+    </a>
+    
+    <a href="https://wa.link/ckhdy7" class="button" target="_blank">
+      Necesitas ayuda con tu compra
+    </a>
+  </div>
 
 </body>
 </html>
