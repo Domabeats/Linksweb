@@ -17,12 +17,12 @@
   html, body {
     height: 100vh;
     margin: 0;
-    overflow: hidden; /* no scroll */
+    overflow: hidden;
   }
   body {
     display: flex;
     justify-content: center;
-    align-items: center; /* centra vertical y horizontal */
+    align-items: center;
     font-family: 'Montserrat', sans-serif;
     color: var(--blanco);
     background: var(--negro);
@@ -66,7 +66,7 @@
   }
   .container {
     background:#121212; 
-    padding: 1.5rem 3rem 20px 3rem; 
+    padding: 1rem 3rem 20px 3rem; /* padding arriba más chico */
     border-radius: 15px; 
     max-width: 400px; 
     width: 100%;
@@ -121,7 +121,7 @@
   }
   @media (max-width: 420px) {
     .container {
-      padding: 1.2rem 2rem 20px 2rem; 
+      padding: 1rem 2rem 20px 2rem; 
       max-width: 90%;
     }
     .button {
