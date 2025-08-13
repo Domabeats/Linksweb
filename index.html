@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --color-negro-suave: #141212;
+    --color-negro-suave: #0f0f0f;
     --color-rojo-opaco: #6E1B1B;
-    --color-azul-oscuro: #031021;
+    --color-azul-oscuro: #1E3C78;
     --color-blanco-humo: #f0f0f0;
     --color-gris-claro: #bbbbbb;
     --color-amarillo-suave: #F5B427;
@@ -29,7 +29,6 @@
     position: relative;
   }
 
-  /* Fondo con manchas grandes difusas y animadas */
   body::before {
     content: "";
     position: fixed;
@@ -38,64 +37,40 @@
     width: 160vw;
     height: 160vh;
     background:
-      radial-gradient(circle at 10% 20%, rgba(110, 27, 27, 0.12) 0%, transparent 60%),
-      radial-gradient(circle at 90% 80%, rgba(3, 16, 33, 0.4) 0%, transparent 55%),
-      radial-gradient(circle at 50% 50%, rgba(110, 27, 27, 0.1) 0%, transparent 65%),
-      radial-gradient(circle at 80% 30%, rgba(3, 16, 33, 0.35) 0%, transparent 55%);
-    
-    background-position:
-      10% 20%,
-      90% 80%,
-      50% 50%,
-      80% 30%;
+      radial-gradient(circle at var(--red-x, 5%) var(--red-y, 5%), rgba(110, 27, 27, 0.3) 0%, transparent 60%),
+      radial-gradient(circle at 95% 85%, rgba(30, 60, 120, 0.9) 0%, transparent 55%),
+      radial-gradient(circle at 85% 35%, rgba(30, 60, 120, 0.85) 0%, transparent 55%);
     
     background-size:
       700px 700px,
       700px 700px,
-      750px 750px,
       700px 700px;
 
     filter: blur(50px);
-    animation: moveBlobs 20s ease-in-out infinite;
+    animation: moveBlueBlobs 15s ease-in-out infinite, redBlobMove 15s linear infinite;
     z-index: 0;
   }
 
-  @keyframes moveBlobs {
-    0% {
+  @keyframes redBlobMove {
+    0%   { --red-x: 5%;  --red-y: 5%;  }
+    25%  { --red-x: 95%; --red-y: 5%;  }
+    50%  { --red-x: 95%; --red-y: 95%; }
+    75%  { --red-x: 5%;  --red-y: 95%; }
+    100% { --red-x: 5%;  --red-y: 5%;  }
+  }
+
+  @keyframes moveBlueBlobs {
+    0%, 100% {
       background-position:
-        0% 0%,
-        100% 100%,
-        50% 50%,
-        100% 0%;
-      background-size:
-        700px 700px,
-        700px 700px,
-        750px 750px,
-        700px 700px;
+        var(--red-x, 5%) var(--red-y, 5%),
+        95% 85%,
+        85% 35%;
     }
     50% {
       background-position:
-        100% 100%,
-        0% 0%,
-        30% 30%,
-        0% 100%;
-      background-size:
-        750px 750px,
-        750px 750px,
-        700px 700px,
-        750px 750px;
-    }
-    100% {
-      background-position:
-        0% 0%,
-        100% 100%,
-        50% 50%,
-        100% 0%;
-      background-size:
-        700px 700px,
-        700px 700px,
-        750px 750px,
-        700px 700px;
+        var(--red-x, 5%) var(--red-y, 5%),
+        80% 70%,
+        70% 45%;
     }
   }
 
