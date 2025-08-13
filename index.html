@@ -24,7 +24,7 @@
     background: var(--negro); 
     overflow-y: auto; 
     position: relative; 
-    padding: 0; /* sacamos padding vertical */
+    padding: 0;
   }
   body::before {
     content: ""; 
@@ -63,45 +63,45 @@
     }
   }
   .container {
-    background: #121212; 
-    padding: 2rem 3rem 20px 3rem; /* menos padding abajo */
-    margin: 100px 0; /* espacio arriba y abajo */
+    background:#121212; 
+    padding: 1.5rem 3rem 20px 3rem; 
+    margin: 100px 0; 
     border-radius: 15px; 
     max-width: 400px; 
     width: 100%;
     text-align: center; 
-    color: var(--blanco);
+    color: var(--blanco); 
     position: relative; 
-    z-index: 10;
-    opacity: 0;
+    z-index: 10; 
+    opacity: 0; 
     animation: fadeInOpacity 1.5s ease forwards;
   }
   @keyframes fadeInOpacity {
     to {opacity: 1;}
   }
   .profile-pic {
-    width: 150px; 
-    height: 150px; 
+    width: 130px; 
+    height: 130px; 
     border-radius: 50%; 
     object-fit: cover;
     border: 3px solid var(--gris); 
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
   .name {
-    font-size: 1.8rem; 
-    margin-bottom: 0.3rem; 
+    font-size: 1.6rem; 
+    margin-bottom: 0.2rem; 
     color: var(--blanco);
   }
   .subtitle {
-    font-size: 1rem; 
+    font-size: 0.9rem; 
     color: var(--gris); 
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
   .button {
     display: block; 
     width: 100%; 
-    padding: 1rem 0; 
-    margin: 0.7rem 0;
+    padding: 0.7rem 0; 
+    margin: 0.5rem 0;
     background: var(--amarillo); 
     color: #000; 
     text-decoration: none;
@@ -119,12 +119,12 @@
   }
   @media (max-width: 420px) {
     .container {
-      padding: 1.5rem 2rem 20px 2rem; 
+      padding: 1.2rem 2rem 20px 2rem; 
       max-width: 90%;
     }
     .button {
       font-size: 0.8rem; 
-      padding: 0.9rem 0;
+      padding: 0.7rem 0;
     }
   }
 </style>
