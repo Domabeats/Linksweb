@@ -15,21 +15,32 @@
     --amarillo: #F5B427;
   }
   body {
-    margin:0; font-family:'Montserrat',sans-serif; color:var(--blanco);
-    min-height:100vh; display:flex; justify-content:center;
-    background:var(--negro); overflow-y:auto; position:relative;
-    padding:100px 0;
+    margin: 0; 
+    font-family: 'Montserrat', sans-serif; 
+    color: var(--blanco);
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center;
+    background: var(--negro); 
+    overflow-y: auto; 
+    position: relative; 
+    padding: 0; /* sacamos padding vertical */
   }
   body::before {
-    content:""; position:fixed; top:-30%; left:-30%; width:160vw; height:160vh;
+    content: ""; 
+    position: fixed; 
+    top: -30%; 
+    left: -30%; 
+    width: 160vw; 
+    height: 160vh;
     background:
-      radial-gradient(circle at var(--red-x,5%) var(--red-y,5%), rgba(110,27,27,.3) 0%, transparent 60%),
+      radial-gradient(circle at var(--red-x, 5%) var(--red-y, 5%), rgba(110,27,27,.3) 0%, transparent 60%),
       radial-gradient(circle at 95% 85%, rgba(30,60,120,.9) 0%, transparent 55%),
       radial-gradient(circle at 85% 35%, rgba(30,60,120,.85) 0%, transparent 55%);
-    background-size:700px 700px;
-    filter:blur(50px);
-    animation:moveBlueBlobs 15s ease-in-out infinite, redBlobMove 15s linear infinite;
-    z-index:0;
+    background-size: 700px 700px;
+    filter: blur(50px);
+    animation: moveBlueBlobs 15s ease-in-out infinite, redBlobMove 15s linear infinite;
+    z-index: 0;
   }
   @keyframes redBlobMove {
     0%,100%{--red-x:5%;--red-y:5%}
@@ -52,36 +63,69 @@
     }
   }
   .container {
-    background:#121212; padding:2rem 3rem 20px 3rem; border-radius:15px; max-width:400px; width:100%;
-    text-align:center; color:var(--blanco); position:relative; z-index:10;
-    opacity:0; animation:fadeInOpacity 1.5s ease forwards;
+    background: #121212; 
+    padding: 2rem 3rem 20px 3rem; /* menos padding abajo */
+    margin: 100px 0; /* espacio arriba y abajo */
+    border-radius: 15px; 
+    max-width: 400px; 
+    width: 100%;
+    text-align: center; 
+    color: var(--blanco);
+    position: relative; 
+    z-index: 10;
+    opacity: 0;
+    animation: fadeInOpacity 1.5s ease forwards;
   }
   @keyframes fadeInOpacity {
-    to{opacity:1}
+    to {opacity: 1;}
   }
   .profile-pic {
-    width:150px; height:150px; border-radius:50%; object-fit:cover;
-    border:3px solid var(--gris); margin-bottom:1rem;
+    width: 150px; 
+    height: 150px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 3px solid var(--gris); 
+    margin-bottom: 1rem;
   }
   .name {
-    font-size:1.8rem; margin-bottom:.3rem; color:var(--blanco);
+    font-size: 1.8rem; 
+    margin-bottom: 0.3rem; 
+    color: var(--blanco);
   }
   .subtitle {
-    font-size:1rem; color:var(--gris); margin-bottom:2rem;
+    font-size: 1rem; 
+    color: var(--gris); 
+    margin-bottom: 2rem;
   }
   .button {
-    display:block; width:100%; padding:1rem 0; margin:.7rem 0;
-    background:var(--amarillo); color:#000; text-decoration:none;
-    font-weight:400; font-family:'Montserrat',sans-serif;
-    border-radius:30px; transition:background-color .3s,color .3s,transform .3s;
-    font-size:.8rem; text-transform:none;
+    display: block; 
+    width: 100%; 
+    padding: 1rem 0; 
+    margin: 0.7rem 0;
+    background: var(--amarillo); 
+    color: #000; 
+    text-decoration: none;
+    font-weight: 400; 
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 30px; 
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    font-size: 0.8rem; 
+    text-transform: none;
   }
   .button:hover {
-    background:#fff; color:#000; transform:scale(1.05);
+    background: #fff; 
+    color: #000; 
+    transform: scale(1.05);
   }
-  @media (max-width:420px) {
-    .container {padding:1.5rem 2rem 20px 2rem; max-width:90%}
-    .button {font-size:.8rem; padding:.9rem 0}
+  @media (max-width: 420px) {
+    .container {
+      padding: 1.5rem 2rem 20px 2rem; 
+      max-width: 90%;
+    }
+    .button {
+      font-size: 0.8rem; 
+      padding: 0.9rem 0;
+    }
   }
 </style>
 </head>
