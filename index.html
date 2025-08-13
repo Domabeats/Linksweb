@@ -14,17 +14,19 @@
     --gris: #bbb;
     --amarillo: #F5B427;
   }
+  html, body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* no scroll */
+  }
   body {
-    margin: 0; 
-    font-family: 'Montserrat', sans-serif; 
-    color: var(--blanco);
-    min-height: 100vh; 
-    display: flex; 
+    display: flex;
     justify-content: center;
-    background: var(--negro); 
-    overflow-y: auto; 
-    position: relative; 
-    padding: 0;
+    align-items: center; /* centra vertical y horizontal */
+    font-family: 'Montserrat', sans-serif;
+    color: var(--blanco);
+    background: var(--negro);
+    position: relative;
   }
   body::before {
     content: ""; 
@@ -65,7 +67,6 @@
   .container {
     background:#121212; 
     padding: 1.5rem 3rem 20px 3rem; 
-    margin: 100px 0; 
     border-radius: 15px; 
     max-width: 400px; 
     width: 100%;
@@ -75,6 +76,7 @@
     z-index: 10; 
     opacity: 0; 
     animation: fadeInOpacity 1.5s ease forwards;
+    box-sizing: border-box;
   }
   @keyframes fadeInOpacity {
     to {opacity: 1;}
