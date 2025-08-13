@@ -2,26 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Domabeats - Producción y Mezcla</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domabeats</title>
+  <!-- Google Fonts Montserrat normal -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --color-negro-chatgpt: #0C0D13;
+      --color-negro: #000000;
       --color-gris-oscuro: #222222;
-      --color-blanco-humo: #F5F5F5;
-      --color-amarillo-opaco: #BFAF2B;
       --color-rojo-opaco: #6E1B1B;
-      --color-negro-fondo: #000000;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      --color-blanco-humo: #f0f0f0;
+      --color-gris-claro: #bbbbbb;
+      --color-amarillo-suave: #F5B427;
     }
 
     body {
+      margin: 0;
       font-family: 'Montserrat', sans-serif;
       color: var(--color-blanco-humo);
       min-height: 100vh;
@@ -30,7 +26,7 @@
       align-items: center;
       padding: 20px;
 
-      background: linear-gradient(135deg, var(--color-negro-fondo), var(--color-gris-oscuro), var(--color-rojo-opaco));
+      background: linear-gradient(135deg, var(--color-negro), var(--color-gris-oscuro), var(--color-rojo-opaco));
       background-size: 400% 400%;
       animation: bgShift 20s ease infinite;
     }
@@ -47,95 +43,98 @@
       }
     }
 
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .container {
-      max-width: 420px;
+      background: #121212; /* negro claro tipo ChatGPT */
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      max-width: 400px;
       width: 100%;
-      background-color: var(--color-negro-chatgpt);
-      border-radius: 16px;
-      padding: 40px 50px;
       text-align: center;
-      transition: box-shadow 0.3s ease;
-      animation: fadeInUp 1s ease forwards;
+      color: var(--color-blanco-humo);
+      box-shadow: none;
     }
 
     .profile-pic {
-      width: 140px;
-      height: 140px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
-      margin-bottom: 25px;
       object-fit: cover;
+      border: 3px solid var(--color-gris-claro);
+      margin-bottom: 1rem;
+      box-shadow: none;
     }
 
-    h1 {
-      font-weight: 400;
-      font-size: 2.4rem;
-      margin-bottom: 8px;
-      color: var(--color-amarillo-opaco);
-    }
-
-    h2 {
-      font-weight: 400;
-      font-size: 1.1rem;
-      margin-bottom: 30px;
+    .name {
+      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
       color: var(--color-blanco-humo);
-      opacity: 0.85;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
     }
 
-    .btn {
+    .subtitle {
+      font-size: 1rem;
+      color: var(--color-gris-claro);
+      margin-bottom: 2rem;
+    }
+
+    .button {
       display: block;
-      width: 80%;
-      margin: 0 auto 20px;
-      padding: 14px 0;
-      font-size: 1.05rem;
+      width: 100%;
+      padding: 1rem 0;
+      margin: 0.7rem 0;
+      background-color: var(--color-amarillo-suave);
+      color: #000;
       text-decoration: none;
-      color: var(--color-negro-chatgpt);
-      background: var(--color-amarillo-opaco);
-      border: none;
-      border-radius: 8px;
-      user-select: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
+      font-weight: 400;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 30px;
+      transition: background-color 0.3s, color 0.3s, transform 0.3s;
+      box-shadow: none;
+      text-transform: none;
+      font-size: 0.8rem;
     }
 
-    .btn:hover {
-      background: var(--color-rojo-opaco);
-      color: var(--color-blanco-humo);
+    .button:hover {
+      background-color: #fff;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 420px) {
+      .container {
+        padding: 1.5rem 2rem;
+        max-width: 90%;
+      }
+      .button {
+        font-size: 0.8rem;
+        padding: 0.9rem 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img
-      class="profile-pic"
-      src="https://github.com/Domabeats/Linksweb/blob/main/index.html#:~:text=Fotoparafondoweblinks.jpg"
-      alt="Foto Domabeats"
-    />
-    <h1>Domabeats</h1>
-    <h2>Producción y Mezcla Profesional</h2>
 
-    <a href="https://discord.gg/GNJ7GEG3Ry" class="btn" target="_blank" rel="noopener noreferrer">
+  <div class="container">
+    <img src="Fotoparafondoweblinks.jpg" alt="Domabeats" class="profile-pic" />
+
+    <div class="name">Domabeats</div>
+    <div class="subtitle">Audio | Cursos | Formación</div>
+
+    <a href="https://go.hotmart.com/M99249770C" class="button" target="_blank" rel="noopener noreferrer">
+      Curso de Producción Musical en FL Studio 50%OFF
+    </a>
+
+    <a href="https://wa.link/v5z9xm" class="button" target="_blank" rel="noopener noreferrer">
+      Curso de Mezcla Online en Vivo
+    </a>
+    
+    <a href="https://wa.link/ckhdy7" class="button" target="_blank" rel="noopener noreferrer">
+      Necesitas ayuda con tu compra
+    </a>
+
+    <a href="https://discord.gg/GNJ7GEG3Ry" class="button" target="_blank" rel="noopener noreferrer">
       Acceso a Discord
     </a>
-    <a href="https://wa.link/ckhdy7" class="btn" target="_blank" rel="noopener noreferrer">
-      Contacto WhatsApp
-    </a>
-    <a href="https://tudominio.com/otro-enlace" class="btn" target="_blank" rel="noopener noreferrer">
-      Link Especial
-    </a>
   </div>
+
 </body>
 </html>
