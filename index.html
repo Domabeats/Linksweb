@@ -1,115 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Domabeats</title>
-  <!-- Google Fonts Montserrat normal -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --color-negro: #000000;
-      --color-gris-oscuro: #222222;
-      --color-rojo-opaco: #6E1B1B;
-      --color-blanco-humo: #f0f0f0;
-      --color-gris-claro: #bbbbbb;
-      --color-amarillo-suave: #F5B427;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Domabeats</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-negro-suave: #141212;
+    --color-rojo-opaco: #6E1B1B;
+    --color-azul-oscuro: #031021;
+    --color-blanco-humo: #f0f0f0;
+    --color-gris-claro: #bbbbbb;
+    --color-amarillo-suave: #F5B427;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-blanco-humo);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: var(--color-negro-suave);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Fondo con manchas grandes difusas y animadas */
+  body::before {
+    content: "";
+    position: fixed;
+    top: -30%;
+    left: -30%;
+    width: 160vw;
+    height: 160vh;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(110, 27, 27, 0.12) 0%, transparent 60%),
+      radial-gradient(circle at 90% 80%, rgba(3, 16, 33, 0.4) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(110, 27, 27, 0.1) 0%, transparent 65%),
+      radial-gradient(circle at 80% 30%, rgba(3, 16, 33, 0.35) 0%, transparent 55%);
+    
+    background-position:
+      10% 20%,
+      90% 80%,
+      50% 50%,
+      80% 30%;
+    
+    background-size:
+      700px 700px,
+      700px 700px,
+      750px 750px,
+      700px 700px;
+
+    filter: blur(50px);
+    animation: moveBlobs 20s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  @keyframes moveBlobs {
+    0% {
+      background-position:
+        0% 0%,
+        100% 100%,
+        50% 50%,
+        100% 0%;
+      background-size:
+        700px 700px,
+        700px 700px,
+        750px 750px,
+        700px 700px;
     }
-
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      color: var(--color-blanco-humo);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-
-      background: linear-gradient(135deg, var(--color-negro), var(--color-gris-oscuro), var(--color-rojo-opaco));
-      background-size: 400% 400%;
-      animation: bgShift 20s ease infinite;
+    50% {
+      background-position:
+        100% 100%,
+        0% 0%,
+        30% 30%,
+        0% 100%;
+      background-size:
+        750px 750px,
+        750px 750px,
+        700px 700px,
+        750px 750px;
     }
-
-    @keyframes bgShift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+    100% {
+      background-position:
+        0% 0%,
+        100% 100%,
+        50% 50%,
+        100% 0%;
+      background-size:
+        700px 700px,
+        700px 700px,
+        750px 750px,
+        700px 700px;
     }
+  }
 
+  .container {
+    background: #121212;
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    color: var(--color-blanco-humo);
+    box-shadow: none;
+    position: relative;
+    z-index: 10;
+  }
+
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-gris-claro);
+    margin-bottom: 1rem;
+    box-shadow: none;
+  }
+
+  .name {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+    color: var(--color-blanco-humo);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--color-gris-claro);
+    margin-bottom: 2rem;
+  }
+
+  .button {
+    display: block;
+    width: 100%;
+    padding: 1rem 0;
+    margin: 0.7rem 0;
+    background-color: var(--color-amarillo-suave);
+    color: #000;
+    text-decoration: none;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 30px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    box-shadow: none;
+    text-transform: none;
+    font-size: 0.8rem;
+  }
+
+  .button:hover {
+    background-color: #fff;
+    color: #000;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 420px) {
     .container {
-      background: #121212; /* negro claro tipo ChatGPT */
-      padding: 2rem 3rem;
-      border-radius: 15px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      color: var(--color-blanco-humo);
-      box-shadow: none;
+      padding: 1.5rem 2rem;
+      max-width: 90%;
     }
-
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--color-gris-claro);
-      margin-bottom: 1rem;
-      box-shadow: none;
-    }
-
-    .name {
-      font-size: 1.8rem;
-      margin-bottom: 0.3rem;
-      color: var(--color-blanco-humo);
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      color: var(--color-gris-claro);
-      margin-bottom: 2rem;
-    }
-
     .button {
-      display: block;
-      width: 100%;
-      padding: 1rem 0;
-      margin: 0.7rem 0;
-      background-color: var(--color-amarillo-suave);
-      color: #000;
-      text-decoration: none;
-      font-weight: 400;
-      font-family: 'Montserrat', sans-serif;
-      border-radius: 30px;
-      transition: background-color 0.3s, color 0.3s, transform 0.3s;
-      box-shadow: none;
-      text-transform: none;
       font-size: 0.8rem;
+      padding: 0.9rem 0;
     }
-
-    .button:hover {
-      background-color: #fff;
-      color: #000;
-      transform: scale(1.05);
-    }
-
-    @media (max-width: 420px) {
-      .container {
-        padding: 1.5rem 2rem;
-        max-width: 90%;
-      }
-      .button {
-        font-size: 0.8rem;
-        padding: 0.9rem 0;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
