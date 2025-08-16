@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Domabeats - Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --fondo: #92c460;
+    --blanco: #f0f0f0;
+    --amarillo: #F5B427;
+    --gris: #333;
+  }
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    background: var(--fondo);
+    color: var(--blanco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+  }
+  .profile-pic {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gris);
+    margin-bottom: 0.8rem;
+  }
+  h1 {
+    margin: 0 0 0.3rem 0;
+    font-weight: 400;
+  }
+  .subtitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--blanco);
+    margin-bottom: 1.5rem;
+  }
+  .button {
+    font-weight: 500; /* solo los botones un poco más fuerte */
+  }
+  .button, .service-button {
+    display: block;
+    width: 100%;
+    padding: 0.8rem 0;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 30px;
+    background: var(--amarillo);
+    color: #000;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .button:hover, .service-button:hover {
+    transform: scale(1.05);
+    background: #fff;
+  }
+  .services {
+    margin-top: 1rem;
+    display: none;
+    text-align: left;
+  }
+  .service-card {
+    background: rgba(0,0,0,0.5);
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+  }
+  .service-card h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  .service-card p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--gris);
+    font-weight: 400;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img src="Fotoparafondoweblinks.jpg" alt="Domabeats" class="profile-pic" />
+    <h1>Domabeats</h1>
+    <div class="subtitle">Audio | Cursos | Formación</div>
+
+    <a href="TU_LINK_PLAYLIST_AQUI" target="_blank" class="button">Mis trabajos</a>
+    <button id="bookBtn" class="button">Reservar servicio</button>
+
+    <div class="services" id="services">
+      <div class="service-card">
+        <h3>Mezcla</h3>
+        <p>Mezcla profesional de tu tema. Precio: $50</p>
+        <a href="TU_LINK_CONTACTO_MEZCLA" target="_blank" class="service-button">Reservar Mezcla</a>
+      </div>
+      <div class="service-card">
+        <h3>Mastering</h3>
+        <p>Mastering profesional listo para streaming. Precio: $30</p>
+        <a href="TU_LINK_CONTACTO_MASTERING" target="_blank" class="service-button">Reservar Mastering</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const bookBtn = document.getElementById('bookBtn');
+  const services = document.getElementById('services');
+  bookBtn.addEventListener('click', () => {
+    services.style.display = services.style.display === 'block' ? 'none' : 'block';
+  });
+</script>
+</body>
+</html>
