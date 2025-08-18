@@ -33,31 +33,11 @@
   }
 
   @keyframes moverNubes {
-    0% {
-      --x1: 20%; --y1: 30%;
-      --x2: 70%; --y2: 60%;
-      --x3: 50%; --y3: 80%;
-    }
-    25% {
-      --x1: 25%; --y1: 35%;
-      --x2: 65%; --y2: 55%;
-      --x3: 55%; --y3: 75%;
-    }
-    50% {
-      --x1: 30%; --y1: 30%;
-      --x2: 60%; --y2: 60%;
-      --x3: 50%; --y3: 80%;
-    }
-    75% {
-      --x1: 25%; --y1: 25%;
-      --x2: 65%; --y2: 65%;
-      --x3: 45%; --y3: 85%;
-    }
-    100% {
-      --x1: 20%; --y1: 30%;
-      --x2: 70%; --y2: 60%;
-      --x3: 50%; --y3: 80%;
-    }
+    0% { --x1:20%; --y1:30%; --x2:70%; --y2:60%; --x3:50%; --y3:80%; }
+    25% { --x1:25%; --y1:35%; --x2:65%; --y2:55%; --x3:55%; --y3:75%; }
+    50% { --x1:30%; --y1:30%; --x2:60%; --y2:60%; --x3:50%; --y3:80%; }
+    75% { --x1:25%; --y1:25%; --x2:65%; --y2:65%; --x3:45%; --y3:85%; }
+    100% { --x1:20%; --y1:30%; --x2:70%; --y2:60%; --x3:50%; --y3:80%; }
   }
 
   .container {
@@ -93,12 +73,9 @@
 
   .button {
     font-weight: 500;
-  }
-
-  .button, .service-button {
     display: block;
     padding: 0.8rem 0;
-    margin: 0.5rem auto; /* centrado y margen vertical */
+    margin: 0.5rem auto;
     font-size: 1rem;
     text-decoration: none;
     border-radius: 30px;
@@ -107,52 +84,27 @@
     border: none;
     font-family: 'Montserrat', sans-serif;
     transition: transform 0.2s, background 0.2s;
-    width: 340px; /* ancho igual al iframe */
-    max-width: 100%; /* responsivo */
+    width: 340px;
+    max-width: 100%;
+    text-align: center;
   }
 
-  .button:hover, .service-button:hover {
+  .button:hover {
     transform: scale(1.05);
     background: #fff;
   }
 
-  /* Embed de Spotify actualizado */
   .spotify-preview {
     margin: 1rem 0;
     display: flex;
     justify-content: center;
   }
+
   .spotify-preview iframe {
     border-radius: 12px;
     width: 340px;
     max-width: 100%;
     height: 352px;
-  }
-
-  .services {
-    margin-top: 1rem;
-    display: none;
-    text-align: left;
-  }
-
-  .service-card {
-    background: rgba(0,0,0,0.5);
-    padding: 1rem;
-    margin: 0.5rem 0;
-    border-radius: 10px;
-  }
-
-  .service-card h3 {
-    margin: 0 0 0.3rem 0;
-    font-size: 1.1rem;
-    font-weight: 400;
-  }
-
-  .service-card p {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
-    color: var(--gris);
-    font-weight: 400;
   }
 </style>
 </head>
@@ -162,7 +114,11 @@
     <h1>Domabeats</h1>
     <div class="subtitle">Audio | Cursos | Formación</div>
 
-    <!-- Embed de Spotify reemplazado -->
+    <!-- Botón Contratar Servicio directo a WhatsApp -->
+    <a href="https://wa.me/5491164243281?text=Hola%20Domabeats,%20quiero%20contratar%20un%20servicio" 
+       target="_blank" class="button">Contratar servicio</a>
+
+    <!-- Embed de Spotify debajo -->
     <div class="spotify-preview">
       <iframe data-testid="embed-iframe" style="border-radius:12px"
               src="https://open.spotify.com/embed/playlist/3pkp0VQI4xn84FcW9MbPS6?utm_source=generator&theme=0" 
@@ -170,29 +126,6 @@
               loading="lazy">
       </iframe>
     </div>
-
-    <button id="bookBtn" class="button">Reservar servicio</button>
-
-    <div class="services" id="services">
-      <div class="service-card">
-        <h3>Mezcla</h3>
-        <p>Mezcla profesional de tu tema. Precio: $50</p>
-        <a href="TU_LINK_CONTACTO_MEZCLA" target="_blank" class="service-button">Reservar Mezcla</a>
-      </div>
-      <div class="service-card">
-        <h3>Mastering</h3>
-        <p>Mastering profesional listo para streaming. Precio: $30</p>
-        <a href="TU_LINK_CONTACTO_MASTERING" target="_blank" class="service-button">Reservar Mastering</a>
-      </div>
-    </div>
   </div>
-
-<script>
-  const bookBtn = document.getElementById('bookBtn');
-  const services = document.getElementById('services');
-  bookBtn.addEventListener('click', () => {
-    services.style.display = services.style.display === 'block' ? 'none' : 'block';
-  });
-</script>
 </body>
 </html>
