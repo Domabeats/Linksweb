@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --fondo: #92c460;
-    --blanco: #f0f0f0;
+    --blanco-perla: #f8f8f6;
+    --blanco-marfil: #f5f3ed;
     --amarillo: #F5B427;
     --gris: #333;
   }
@@ -16,20 +16,28 @@
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    background: var(--fondo);
-    color: var(--blanco);
+    background: linear-gradient(-45deg, var(--blanco-perla), var(--blanco-marfil), #ffffff, var(--blanco-perla));
+    background-size: 400% 400%;
+    animation: moverGradiente 12s ease infinite;
+    color: var(--gris);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
   }
+  @keyframes moverGradiente {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
   .container {
     text-align: center;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.65);
     padding: 2rem;
     border-radius: 15px;
     max-width: 400px;
     width: 90%;
+    color: #f0f0f0;
   }
   .profile-pic {
     width: 130px;
@@ -46,11 +54,11 @@
   .subtitle {
     font-size: 0.9rem;
     font-weight: 400;
-    color: var(--blanco);
     margin-bottom: 1.5rem;
+    color: #ddd;
   }
   .button {
-    font-weight: 500; /* solo los botones un poco más fuerte */
+    font-weight: 500;
   }
   .button, .service-button {
     display: block;
