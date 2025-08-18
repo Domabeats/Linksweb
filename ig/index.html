@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,7 +32,6 @@
     animation: moverNubes 25s linear infinite;
   }
 
-  /* Animación de las nubes */
   @keyframes moverNubes {
     0% {
       --x1: 20%; --y1: 30%;
@@ -99,9 +97,8 @@
 
   .button, .service-button {
     display: block;
-    width: 100%;
     padding: 0.8rem 0;
-    margin: 0.5rem 0;
+    margin: 0.5rem auto; /* centrado y margen vertical */
     font-size: 1rem;
     text-decoration: none;
     border-radius: 30px;
@@ -110,11 +107,26 @@
     border: none;
     font-family: 'Montserrat', sans-serif;
     transition: transform 0.2s, background 0.2s;
+    width: 340px; /* ancho igual al iframe */
+    max-width: 100%; /* responsivo */
   }
 
   .button:hover, .service-button:hover {
     transform: scale(1.05);
     background: #fff;
+  }
+
+  /* Embed de Spotify actualizado */
+  .spotify-preview {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+  }
+  .spotify-preview iframe {
+    border-radius: 12px;
+    width: 340px;
+    max-width: 100%;
+    height: 352px;
   }
 
   .services {
@@ -150,7 +162,15 @@
     <h1>Domabeats</h1>
     <div class="subtitle">Audio | Cursos | Formación</div>
 
-    <a href="https://open.spotify.com/playlist/3pkp0VQI4xn84FcW9MbPS6?si=d753188c27524dd0" target="_blank" class="button">Mis trabajos</a>
+    <!-- Embed de Spotify reemplazado -->
+    <div class="spotify-preview">
+      <iframe data-testid="embed-iframe" style="border-radius:12px"
+              src="https://open.spotify.com/embed/playlist/3pkp0VQI4xn84FcW9MbPS6?utm_source=generator&theme=0" 
+              frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              loading="lazy">
+      </iframe>
+    </div>
+
     <button id="bookBtn" class="button">Reservar servicio</button>
 
     <div class="services" id="services">
