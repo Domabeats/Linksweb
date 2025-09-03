@@ -1,131 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Domabeats - Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ezequiel Domabeats · Discografía</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blanco-perla: #f8f8f6;
-    --blanco-marfil: #f5f3ed;
-    --amarillo: #F5B427;
-    --gris: #333;
-  }
+:root {
+  --fondo-top: #0a0a0a;
+  --fondo-bottom: #1f1f1f;
+  --texto: #f0e8d0;
+  --subtexto: #b0a894;
+}
 
-  body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    color: var(--gris);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--fondo-top), var(--fondo-bottom));
+  font-family: 'Montserrat', sans-serif;
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    /* Fondo tipo nubes animadas */
-    background:
-      radial-gradient(circle at var(--x1, 20%) var(--y1, 30%), var(--blanco-marfil) 0%, rgba(245,243,237,0) 60%),
-      radial-gradient(circle at var(--x2, 70%) var(--y2, 60%), #ccc 0%, rgba(204,204,204,0) 60%),
-      radial-gradient(circle at var(--x3, 50%) var(--y3, 80%), var(--blanco-marfil) 0%, rgba(245,243,237,0) 60%);
-    background-size: cover;
-    animation: moverNubes 25s linear infinite;
-  }
+/* Bloque de perfil */
+.profile-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  text-align: center;
+}
 
-  @keyframes moverNubes {
-    0% { --x1:20%; --y1:30%; --x2:70%; --y2:60%; --x3:50%; --y3:80%; }
-    25% { --x1:25%; --y1:35%; --x2:65%; --y2:55%; --x3:55%; --y3:75%; }
-    50% { --x1:30%; --y1:30%; --x2:60%; --y2:60%; --x3:50%; --y3:80%; }
-    75% { --x1:25%; --y1:25%; --x2:65%; --y2:65%; --x3:45%; --y3:85%; }
-    100% { --x1:20%; --y1:30%; --x2:70%; --y2:60%; --x3:50%; --y3:80%; }
-  }
+.profile-block img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--subtexto);
+  margin-bottom: 10px;
+}
 
-  .container {
-    text-align: center;
-    background: rgba(0,0,0,0.65);
-    padding: 2rem;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 90%;
-    color: #f0f0f0;
-  }
+.profile-block .name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
 
-  .profile-pic {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--gris);
-    margin-bottom: 0.8rem;
-  }
+.profile-block .subtitle {
+  font-size: 0.9rem;
+  color: var(--subtexto);
+  letter-spacing: 0.5px;
+}
 
-  h1 {
-    margin: 0 0 0.3rem 0;
-    font-weight: 400;
-  }
+/* Galería 5 covers por fila, sin separación */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  max-width: 100%;
+  margin: 0 auto 40px auto;
+}
 
-  .subtitle {
-    font-size: 0.9rem;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    color: #ddd;
-  }
+.card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
 
-  .button {
-    font-weight: 500;
-    display: block;
-    padding: 0.8rem 0;
-    margin: 0.5rem auto;
-    font-size: 1rem;
-    text-decoration: none;
-    border-radius: 30px;
-    background: var(--amarillo);
-    color: #000;
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    transition: transform 0.2s, background 0.2s;
-    width: 340px;
-    max-width: 100%;
-    text-align: center;
-  }
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
 
-  .button:hover {
-    transform: scale(1.05);
-    background: #fff;
-  }
+/* Overlay sutil */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%);
+  pointer-events: none;
+}
 
-  .spotify-preview {
-    margin: 1rem 0;
-    display: flex;
-    justify-content: center;
-  }
+/* Texto en margen superior izquierdo, más grande */
+.hover-text {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.6);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: left;
+  color: var(--texto);
+  opacity: 0;             /* <-- oculto por defecto */
+  transition: opacity 0.3s ease;
+  pointer-events: none;   /* no bloquea el hover del card */
+  max-width: 70%;
+}
 
-  .spotify-preview iframe {
-    border-radius: 12px;
-    width: 340px;
-    max-width: 100%;
-    height: 352px;
-  }
+.hover-text .artist {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.hover-text .release {
+  font-size: 1rem;
+}
+
+.hover-text .service {
+  font-size: 0.9rem;
+  color: var(--subtexto);
+}
+
+/* Hover effect sobre la imagen y texto */
+.card:hover img {
+  opacity: 0.2;
+}
+
+.card:hover .hover-text {
+  opacity: 1;  /* <-- aparece solo al hover */
+}
+
+/* Botón de play */
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;               /* inicial oculto */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .play-btn {
+  opacity: 1;               /* aparece solo al hover */
+  transform: translate(-50%, -50%) scale(1.1);
+}
 </style>
 </head>
 <body>
-  <div class="container">
-    <img src="Foto perfil.jpg" alt="Domabeats" class="profile-pic" />
-    <h1>Domabeats</h1>
-    <div class="subtitle">Masterización | Mezcla | Grabación</div>
 
-    <!-- Botón Contratar Servicio directo a WhatsApp -->
-    <a href="https://wa.me/5491164243281?text=Hola%20Doma%20💪🏼%20Quisiera%20contratar%20tu%20servicio" 
-       target="_blank" class="button">Contratar servicio</a>
+<!-- Bloque de perfil -->
+<div class="profile-block">
+  <img src="https://raw.githubusercontent.com/tu-usuario/Linksweb/main/ig/Fotoparafondoweblinks.jpg" alt="Ezequiel Domabeats">
+  <div class="name">Ezequiel Domabeats</div>
+  <div class="subtitle">Audio | Mastering | Mix</div>
+</div>
 
-    <!-- Embed de Spotify debajo -->
-    <div class="spotify-preview">
-      <iframe data-testid="embed-iframe" style="border-radius:12px"
-              src="https://open.spotify.com/embed/playlist/3pkp0VQI4xn84FcW9MbPS6?utm_source=generator&theme=0" 
-              frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-              loading="lazy">
-      </iframe>
+<!-- Galería -->
+<main>
+  <div class="gallery">
+    <!-- Posición 1: Sexfriends — Zeck1ng Ft. Osito Wito -->
+    <div class="card">
+      <img src="https://raw.githubusercontent.com/tu-usuario/Linksweb/main/ig/Sexfriends%20cover.png" alt="Sexfriends — Zeck1ng Ft. Osito Wito">
+      <div class="hover-text">
+        <div class="artist">Zeck1ng Ft. Osito Wito</div>
+        <div class="release">Sexfriends</div>
+        <div class="service">Mastering</div>
+      </div>
+      <a href="https://www.youtube.com/watch?v=UgQdSf49x_4" target="_blank">
+        <button class="play-btn">▶️</button>
+      </a>
     </div>
+
+    <!-- Posición 2: Una oportunidad — Deuz -->
+    <div class="card">
+      <img src="https://raw.githubusercontent.com/tu-usuario/Linksweb/main/ig/Deuz%20Una%20oportunidad.png" alt="Una oportunidad — Deuz">
+      <div class="hover-text">
+        <div class="artist">Deuz</div>
+        <div class="release">Una oportunidad</div>
+        <div class="service">Mastering</div>
+      </div>
+      <a href="https://www.youtube.com/watch?v=y6tUxMQ4nUU" target="_blank">
+        <button class="play-btn">▶️</button>
+      </a>
+    </div>
+
+    <!-- Podés agregar más covers duplicando este bloque -->
   </div>
+</main>
+
 </body>
 </html>
