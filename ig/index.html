@@ -23,34 +23,39 @@ body {
   align-items: center;
 }
 
-/* Bloque de perfil */
-.profile-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Bloque de perfil (usando tu código viejo que funciona) */
+.container {
+  background:#121212; 
+  padding: 1rem 3rem 20px 3rem; 
+  border-radius: 15px; 
+  max-width: 400px; 
+  width: 100%;
+  text-align: center; 
+  color: var(--texto); 
+  position: relative; 
+  z-index: 10; 
   margin: 20px 0;
-  text-align: center;
 }
 
-.profile-block img {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
+.profile-pic {
+  width: 130px; 
+  height: 130px; 
+  border-radius: 50%; 
   object-fit: cover;
-  border: 3px solid var(--subtexto);
-  margin-bottom: 10px;
+  border: 3px solid var(--subtexto); 
+  margin-bottom: 0.8rem;
 }
 
-.profile-block .name {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 4px;
+.name {
+  font-size: 1.6rem; 
+  margin-bottom: 0.2rem; 
+  color: var(--texto);
 }
 
-.profile-block .subtitle {
-  font-size: 0.9rem;
-  color: var(--subtexto);
-  letter-spacing: 0.5px;
+.subtitle {
+  font-size: 0.9rem; 
+  color: var(--subtexto); 
+  margin-bottom: 1.5rem;
 }
 
 /* Galería 5 covers por fila, sin separación */
@@ -84,7 +89,7 @@ body {
   pointer-events: none;
 }
 
-/* Texto en margen superior izquierdo, más grande */
+/* Texto en margen superior izquierdo */
 .hover-text {
   position: absolute;
   top: 8px;
@@ -149,13 +154,12 @@ body {
 </head>
 <body>
 
-<!-- Bloque de perfil -->
-<div class="profile-block">
-  <img src="Fotoparafondoweblinks.jpg" alt="Ezequiel Domabeats">
+<!-- Bloque de perfil (tu código viejo) -->
+<div class="container">
+  <img src="Linksweb/ig/Fotoparafondoweblinks.jpg" alt="Ezequiel Domabeats" class="profile-pic" />
   <div class="name">Ezequiel Domabeats</div>
   <div class="subtitle">Audio | Mastering | Mix</div>
 </div>
-
 
 <!-- Galería -->
 <main>
