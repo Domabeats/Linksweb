@@ -1,24 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domabeats</title>
-  <style>
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #fff;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ezequiel Domabeats · Discografía</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  background: #0f0f0f; /* Fondo general */
+  font-family: 'Montserrat', sans-serif;
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Bloque de perfil */
+.container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.profile-pic {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #bbb;
+  margin-bottom: 0.8rem;
+}
+
+.name {
+  font-size: 1.6rem;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 1.5rem;
+}
+
+/* Galería 5 covers por fila */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  max-width: 100%;
+  margin-bottom: 40px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+/* Overlay sutil */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%);
+  pointer-events: none;
+}
+
+/* Texto en margen superior izquierdo */
+.hover-text {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.6);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: left;
+  color: #f0f0f0;
+  opacity: 0;             
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  max-width: 70%;
+}
+
+.hover-text .artist {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.hover-text .release {
+  font-size: 1rem;
+}
+
+.hover-text .service {
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+/* Hover effect */
+.card:hover img {
+  opacity: 0.2;
+}
+
+.card:hover .hover-text {
+  opacity: 1; 
+}
+
+/* Botón de play */
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0; 
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .play-btn {
+  opacity: 1; 
+  transform: translate(-50%, -50%) scale(1.1);
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <img src="https://p16-common-sign-va.tiktokcdn-us.com/tos-maliva-avt-0068/bd27bcc34f61731a9f1e1c8c7775bb68~tplv-tiktokx-cropcenter:720:720.jpeg" alt="Ezequiel Domabeats" class="profile-pic" />
-    <div class="name">Ezequiel Domabeats</div>
-    <div class="subtitle">Audio | Mastering | Mix</div>
+
+<!-- Bloque de perfil -->
+<div class="container">
+  <img src="https://share.google/images/kfiGsnLui5i4MSjqJ" alt="Ezequiel Domabeats" class="profile-pic" />
+  <div class="name">Ezequiel Domabeats</div>
+  <div class="subtitle">Audio | Mastering | Mix</div>
+</div>
+
+<!-- Galería -->
+<main>
+  <div class="gallery">
+    <!-- Cover 1 -->
+    <div class="card">
+      <img src="Linksweb/ig/Sexfriends_cover.png" alt="Sexfriends — Zeck1ng Ft. Osito Wito">
+      <div class="hover-text">
+        <div class="artist">Zeck1ng Ft. Osito Wito</div>
+        <div class="release">Sexfriends</div>
+        <div class="service">Mastering</div>
+      </div>
+      <a href="https://www.youtube.com/watch?v=UgQdSf49x_4" target="_blank">
+        <button class="play-btn">▶️</button>
+      </a>
+    </div>
+
+    <!-- Cover 2 -->
+    <div class="card">
+      <img src="Linksweb/ig/Deuz_Una_oportunidad.png" alt="Una oportunidad — Deuz">
+      <div class="hover-text">
+        <div class="artist">Deuz</div>
+        <div class="release">Una oportunidad</div>
+        <div class="service">Mastering</div>
+      </div>
+      <a href="https://www.youtube.com/watch?v=y6tUxMQ4nUU" target="_blank">
+        <button class="play-btn">▶️</button>
+      </a>
+    </div>
+
+    <!-- Más covers duplicando el bloque .card -->
   </div>
+</main>
+
 </body>
 </html>
