@@ -6,55 +6,39 @@
 <title>Ezequiel Domabeats · Discografía</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <style>
-:root {
-  --fondo-top: #0a0a0a;
-  --fondo-bottom: #1f1f1f;
-  --texto: #f0e8d0;
-  --subtexto: #b0a894;
-}
-
 body {
   margin: 0;
-  background: linear-gradient(180deg, var(--fondo-top), var(--fondo-bottom));
+  background: #0f0f0f; /* tu fondo general */
   font-family: 'Montserrat', sans-serif;
-  color: var(--texto);
+  color: #f0f0f0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Bloque de perfil (usando tu código viejo que funciona) */
+/* Bloque de perfil - exactamente tu código viejo */
 .container {
-  background:#121212; 
-  padding: 1rem 3rem 20px 3rem; 
-  border-radius: 15px; 
-  max-width: 400px; 
-  width: 100%;
-  text-align: center; 
-  color: var(--texto); 
-  position: relative; 
-  z-index: 10; 
+  text-align: center;
   margin: 20px 0;
 }
 
 .profile-pic {
-  width: 130px; 
-  height: 130px; 
-  border-radius: 50%; 
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--subtexto); 
+  border: 3px solid #bbb;
   margin-bottom: 0.8rem;
 }
 
 .name {
-  font-size: 1.6rem; 
-  margin-bottom: 0.2rem; 
-  color: var(--texto);
+  font-size: 1.6rem;
+  margin-bottom: 0.2rem;
 }
 
 .subtitle {
-  font-size: 0.9rem; 
-  color: var(--subtexto); 
+  font-size: 0.9rem;
+  color: #bbb;
   margin-bottom: 1.5rem;
 }
 
@@ -64,7 +48,7 @@ body {
   grid-template-columns: repeat(5, 1fr);
   gap: 0;
   max-width: 100%;
-  margin: 0 auto 40px auto;
+  margin-bottom: 40px;
 }
 
 .card {
@@ -98,7 +82,7 @@ body {
   padding: 8px 12px;
   border-radius: 6px;
   text-align: left;
-  color: var(--texto);
+  color: #f0f0f0;
   opacity: 0;             /* oculto por defecto */
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -116,7 +100,7 @@ body {
 
 .hover-text .service {
   font-size: 0.9rem;
-  color: var(--subtexto);
+  color: #bbb;
 }
 
 /* Hover effect sobre la imagen y texto */
@@ -154,7 +138,7 @@ body {
 </head>
 <body>
 
-<!-- Bloque de perfil (tu código viejo) -->
+<!-- Bloque de perfil -->
 <div class="container">
   <img src="Linksweb/ig/Fotoparafondoweblinks.jpg" alt="Ezequiel Domabeats" class="profile-pic" />
   <div class="name">Ezequiel Domabeats</div>
