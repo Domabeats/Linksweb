@@ -23,7 +23,7 @@ body {
 }
 
 .profile-pic {
-  width: 20vw; /* relativo al ancho de la pantalla */
+  width: 20vw; 
   max-width: 130px;
   height: auto;
   border-radius: 50%;
@@ -77,58 +77,36 @@ body {
   transition: opacity 0.3s ease;
   pointer-events: none;
   max-width: 80%;
-  z-index: 4; /* texto siempre por arriba */
+  z-index: 4; 
 }
 
-.hover-text .artist {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.hover-text .release {
-  font-size: 1rem;
-  margin-top: 2px;
-}
-
-.hover-text .type {
-  font-size: 0.85rem;
-  color: #bbb;
-  margin-top: 2px;
-}
-
-.hover-text .service {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 2px;
-}
+.hover-text .artist { font-weight: 700; font-size: 1.1rem; }
+.hover-text .release { font-size: 1rem; margin-top: 2px; }
+.hover-text .type { font-size: 0.85rem; color: #bbb; margin-top: 2px; }
+.hover-text .service { font-size: 0.75rem; color: #888; margin-top: 2px; }
 
 /* Hover effect */
-.card:hover img {
-  opacity: 0.2;
-}
+.card:hover img { opacity: 0.2; }
+.card:hover .hover-text { opacity: 1; }
 
-.card:hover .hover-text {
-  opacity: 1; 
-}
-
-/* Botón de play */
+/* Botón de play minimalista */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.15);
-  border: 2px solid #f0f0f0;
+  width: auto;
+  height: auto;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2; /* debajo del texto */
+  z-index: 2; 
   opacity: 0; 
   transition: opacity 0.3s ease, transform 0.3s ease;
+  background: none; 
+  border: none;
+  padding: 0;
 }
 
 .play-btn::before {
@@ -136,22 +114,20 @@ body {
   display: block;
   width: 0; 
   height: 0;
-  border-left: 14px solid #f0f0f0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  margin-left: 3px;
+  border-left: 18px solid #f0f0f0; 
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 0;
 }
 
 .card:hover .play-btn {
   opacity: 1; 
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.2);
 }
 
-/* Responsive: ajustar columnas */
+/* Responsive: ajustar columnas y texto */
 @media (max-width: 900px) {
-  .gallery {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .gallery { grid-template-columns: repeat(3, 1fr); }
   .hover-text .artist { font-size: 1rem; }
   .hover-text .release { font-size: 0.9rem; }
   .hover-text .type { font-size: 0.75rem; }
@@ -159,15 +135,13 @@ body {
 }
 
 @media (max-width: 600px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
   .profile-pic { width: 30vw; }
   .hover-text .artist { font-size: 0.9rem; }
   .hover-text .release { font-size: 0.8rem; }
   .hover-text .type { font-size: 0.7rem; }
   .hover-text .service { font-size: 0.6rem; }
-  .play-btn { width: 35px; height: 35px; }
+  .play-btn::before { border-left: 14px solid #f0f0f0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
 }
 </style>
 </head>
