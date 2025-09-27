@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-    <!-- Fix: quitar filtros de brillo/contraste para que las fotos se vean tal cual -->
+    <!-- Fix: mostrar las fotos tal cual, sin filtros ni lavado -->
     <style>
         .image img,
         .gallery img {
             filter: none !important;
+            opacity: 1 !important;
+            mix-blend-mode: normal !important;
         }
     </style>
 </head>
