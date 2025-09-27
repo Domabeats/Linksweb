@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mixtering Flash</title>
-<style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mixtering Flash</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
 
-  .intro {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    background: url("intro.jpg") no-repeat center center;
-    background-size: cover;
-  }
+    .intro {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      background: url("intro.jpg") no-repeat center center;
+      background-size: cover;
+    }
 
-  /* Botón invisible */
-  .invisible-btn {
-    position: absolute;
-    left: 50%;
-    bottom: 15%; /* Ajustá según donde diga “de qué se trata” en la foto */
-    transform: translateX(-50%);
-    width: 200px;  /* ajustá al tamaño del texto en la imagen */
-    height: 60px;  /* ajustá también */
-    cursor: pointer;
-    background: transparent;
-    border: none;
-  }
+    /* Botón invisible */
+    .invisible-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 15%; /* ajustá la posición */
+      transform: translateX(-50%);
+      width: 200px;   /* ajustá ancho */
+      height: 60px;   /* ajustá alto */
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      display: block;
+      text-decoration: none;
+    }
 
-  /* Bloque siguiente */
-  .section {
-    height: 100vh;
-    background: #111;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-  }
-</style>
+    /* Bloque siguiente */
+    .section {
+      height: 100vh;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+    }
+
+    /* Scroll suave */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 <body>
 
   <div class="intro">
+    <!-- Botón invisible que baja al bloque -->
     <a href="#mixtering" class="invisible-btn"></a>
   </div>
 
@@ -56,3 +64,4 @@
 
 </body>
 </html>
+
