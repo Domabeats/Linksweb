@@ -56,22 +56,23 @@
 <style>
     /* Botón cuadrado simple rojo estilo McDonald's */
     .btn-red-outline {
-        display: inline-block;
-        padding: 1.0rem 6rem;
-        font-size: 0rem;
-        font-weight: 600;
-        color: #FF0000; /* rojo McDonald's */
-        border: 0px solid #FF0000;
-        background: transparent;100
-        text-decoration: none;
-        border-radius: 0px;
-        transition: background 0.3s, color 0.3s;
-        margin-top: 530px;
-    }
-    .btn-red-outline:hover {
-        background: #FF0000;
-        color: #fff;
-    }
+    display: inline-block;
+    padding: 1.0rem 6rem; /* mantiene el tamaño clickeable */
+    font-size: 0rem;        /* texto invisible */
+    color: transparent;     /* texto invisible */
+    border: 0px solid transparent; /* borde invisible */
+    background: transparent;       /* fondo invisible */
+    text-decoration: none;
+    border-radius: 0px;
+    transition: background 0.3s, color 0.3s;
+    margin-top: 530px;
+}
+
+.btn-red-outline:hover {
+    background: #FF0000; /* se ve el rojo al pasar el cursor */
+    color: #fff;         /* si hubiera texto, se volvería blanco */
+    border: 0px solid #FF0000; /* opcional: borde visible al pasar el cursor */
+}
 </style>
 
             
@@ -188,6 +189,7 @@
 
 </body>
 </html>
+
 
 
 
