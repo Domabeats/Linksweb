@@ -7,34 +7,12 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-    <!-- Fix profesional: restaurar fotos tal cual -->
+    <!-- Fix: mostrar las fotos tal cual, sin filtros ni lavado -->
     <style>
-        /* Quitar filtros, opacidad y modos de mezcla */
-        .image img, 
+        .image img,
         .gallery img {
             filter: none !important;
             opacity: 1 !important;
-            mix-blend-mode: normal !important;
-            animation: none !important;
-        }
-
-        /* Quitar overlays o pseudo-elementos que oscurecen imágenes */
-        .image.fit::before,
-        .image.fit::after,
-        .gallery article::before,
-        .gallery article::after {
-            content: none !important;
-            background: none !important;
-        }
-
-        /* Evitar que contenedores oscuros afecten la imagen */
-        .gallery, 
-        .gallery article, 
-        .main.style1.dark,
-        .main.style2.dark,
-        .main.style3.primary,
-        .main.style3.secondary {
-            background: none !important;
             mix-blend-mode: normal !important;
         }
     </style>
