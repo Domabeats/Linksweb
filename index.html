@@ -57,6 +57,7 @@ let gainA, gainB;
 let startTime = 0;
 let pausedAt = 0;
 let isPlaying = false;
+let audioLoaded = false;
 
 const progressEl = document.getElementById("progress");
 const timeline = document.getElementById("timeline");
@@ -77,12 +78,6 @@ async function loadAudio(url) {
   return await ctx.decodeAudioData(arrayBuffer);
 }
 
-async function init() {
-  bufferA = await loadAudio(audioAUrl);
-  bufferB = await loadAudio(audioBUrl);
-  durationEl.textContent = formatTime(bufferA.duration);
-}
-
 function createSources(offset=0) {
   sourceA = ctx.createBufferSource();
   sourceB = ctx.createBufferSource();
@@ -96,7 +91,6 @@ function createSources(offset=0) {
   sourceA.connect(gainA).connect(ctx.destination);
   sourceB.connect(gainB).connect(ctx.destination);
 
-  // Mantener A/B
   gainA.gain.value = btnA.classList.contains('active') ? 1 : 0;
   gainB.gain.value = btnB.classList.contains('active') ? 1 : 0;
 
@@ -110,12 +104,12 @@ function createSources(offset=0) {
 }
 
 function play() {
-  if (isPlaying) return;
+  if(isPlaying) return;
   createSources(pausedAt);
 }
 
 function pause() {
-  if (!isPlaying) return;
+  if(!isPlaying) return;
   sourceA.stop();
   sourceB.stop();
   pausedAt = ctx.currentTime - startTime;
@@ -123,7 +117,7 @@ function pause() {
 }
 
 function updateProgress() {
-  if (!isPlaying) return;
+  if(!isPlaying) return;
   const current = ctx.currentTime - startTime;
   const duration = bufferA.duration;
   const percent = Math.min((current / duration) * 100, 100);
@@ -134,13 +128,13 @@ function updateProgress() {
 
 // SEEK
 timeline.addEventListener('click', e => {
-  if (!bufferA) return;
+  if(!audioLoaded) return;
   const rect = timeline.getBoundingClientRect();
   const percent = (e.clientX - rect.left)/rect.width;
   const newTime = bufferA.duration * percent;
   pausedAt = newTime;
 
-  if (isPlaying) {
+  if(isPlaying) {
     sourceA.stop();
     sourceB.stop();
     isPlaying = false;
@@ -153,7 +147,15 @@ timeline.addEventListener('click', e => {
 
 // UI
 document.getElementById("playBtn").onclick = async () => {
-  if (ctx.state === "suspended") await ctx.resume();
+  if(ctx.state === "suspended") await ctx.resume();
+
+  if(!audioLoaded){
+    bufferA = await loadAudio(audioAUrl);
+    bufferB = await loadAudio(audioBUrl);
+    durationEl.textContent = formatTime(bufferA.duration);
+    audioLoaded = true;
+  }
+
   play();
 };
 
@@ -172,8 +174,6 @@ btnB.onclick = () => {
   btnB.classList.add("active");
   btnA.classList.remove("active");
 };
-
-init();
 </script>
 
 </body>
