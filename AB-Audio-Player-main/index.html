@@ -8,16 +8,7 @@
     <meta name="description" content="Toggle between two audio files to compare" />
     <meta name="author" content="Matt Bartley" />
 
-    <meta property="og:title" content="A/B Audio Player" />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content="Toggle between two audio files to compare" />
-    <meta property="og:image" content="image.png" />
-
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -25,27 +16,19 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="./css/style.css" />
   </head>
 
   <body>
     <div id="intro">
       <h1>A/B Player</h1>
-      <div id="tagline">
-        A zero-dependency HTML, CSS, Javascript audio player.
-      </div>
-
-      <a href="https://github.com/mattbartley/AB-Audio-Player" target="_blank"
-        ><i class="fa-brands fa-github"></i> Open Source on GitHub</a
-      >
       <p>Toggle between two audio files to compare them side-by-side.</p>
     </div>
 
     <div class="players">
       <div
         class="player__wrapper"
-        data-audio-a="https://raw.githubusercontent.com/Domabeats/Linksweb/0ca0d245a681e76fdcae4c4e30332fa028656ce4/JackieGreene-DontletthedeviltakeyourmindBEFORE.wav"
-        data-audio-b="https://raw.githubusercontent.com/Domabeats/Linksweb/0ca0d245a681e76fdcae4c4e30332fa028656ce4/JackieGreene-Dontletthedeviltakeyourmindafter.wav"
+        data-audio-a="./JackieGreene-DontletthedeviltakeyourmindBEFORE.wav"
+        data-audio-b="./JackieGreene-Dontletthedeviltakeyourmindafter.wav"
       >
         <div class="progress__container progress">
           <div class="progress__bar progress__fill"></div>
