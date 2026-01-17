@@ -1,54 +1,198 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Próximamente - Domabeats</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #000; /* fondo negro */
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Imagen de faders local */
-  .faders-bg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('faders.jpg') no-repeat center center;
-    background-size: cover;
-    opacity: 0.2; /* 20% de visibilidad */
-    z-index: 0;
-  }
-
-  h1 {
-    position: relative;
-    color: #fff;
-    font-size: 4rem;
-    font-weight: 700;
-    z-index: 1;
-    text-align: center;
-  }
-
-  @media (max-width: 600px) {
-    h1 {
-      font-size: 2.5rem;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reproductor A/B – Jackie Greene</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-  }
-</style>
+    .player {
+      background: #161616;
+      border-radius: 12px;
+      padding: 24px;
+      width: 360px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+    .title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .subtitle { font-size: 12px; color: #9a9a9a; margin-bottom: 16px; }
+    .ab-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+    .ab-toggle button {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #1f1f1f;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .ab-toggle button.active { background: #f5b427; color: #000; border-color: #f5b427; }
+    .timeline { height: 4px; background: #2a2a2a; border-radius: 2px; margin-bottom: 8px; overflow: hidden; cursor: pointer; }
+    .progress { height: 100%; width: 0%; background: #f5b427; }
+    .time { display: flex; justify-content: space-between; font-size: 11px; color: #9a9a9a; margin-bottom: 14px; }
+    .controls { display: flex; justify-content: center; gap: 12px; }
+    .controls button { background: #1f1f1f; border: 1px solid #333; color: #eaeaea; width: 44px; height: 44px; border-radius: 50%; font-size: 14px; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <div class="faders-bg"></div>
-  <h1>Próximamente</h1>
+  <div class="player">
+    <div class="title">Jackie Greene – Don’t let the devil take your mind</div>
+    <div class="subtitle">Comparación educativa</div>
+
+    <div class="ab-toggle">
+      <button id="btnA" class="active">ORIGINAL</button>
+      <button id="btnB">MEZCLA</button>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="time">
+      <span id="currentTime">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+
+    <div class="controls">
+      <button id="playBtn">▶︎</button>
+      <button id="pauseBtn">⏸</button>
+    </div>
+  </div>
+
+<script>
+const audioAUrl = "https://raw.githubusercontent.com/Domabeats/Linksweb/1ae3ebd4d42144f7311b6e8abdfe60a7c810b603/Jackie%20Greene%20-%20Dont%20let%20the%20devil%20take%20your%20mind%20BEFORE.wav";
+const audioBUrl = "https://raw.githubusercontent.com/Domabeats/Linksweb/1ae3ebd4d42144f7311b6e8abdfe60a7c810b603/Jackie%20Greene%20-%20Dont%20let%20the%20devil%20take%20your%20mind%20AFTER.wav";
+
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const ctx = new AudioContext();
+
+let bufferA, bufferB;
+let sourceA, sourceB;
+let gainA, gainB;
+let startTime = 0;
+let pausedAt = 0;
+let isPlaying = false;
+
+const progressEl = document.getElementById("progress");
+const timeline = document.getElementById("timeline");
+const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+
+async function loadAudio(url) {
+  const res = await fetch(url);
+  const arrayBuffer = await res.arrayBuffer();
+  return await ctx.decodeAudioData(arrayBuffer);
+}
+
+async function init() {
+  bufferA = await loadAudio(audioAUrl);
+  bufferB = await loadAudio(audioBUrl);
+  durationEl.textContent = formatTime(bufferA.duration);
+}
+
+function createSources(offset=0) {
+  sourceA = ctx.createBufferSource();
+  sourceB = ctx.createBufferSource();
+
+  gainA = ctx.createGain();
+  gainB = ctx.createGain();
+
+  sourceA.buffer = bufferA;
+  sourceB.buffer = bufferB;
+
+  sourceA.connect(gainA).connect(ctx.destination);
+  sourceB.connect(gainB).connect(ctx.destination);
+
+  gainA.gain.value = 1;
+  gainB.gain.value = 0;
+
+  sourceA.start(0, offset);
+  sourceB.start(0, offset);
+
+  startTime = ctx.currentTime - offset;
+  isPlaying = true;
+
+  updateProgress();
+}
+
+function play() {
+  if(isPlaying) return;
+  createSources(pausedAt);
+}
+
+function pause() {
+  if(!isPlaying) return;
+  sourceA.stop();
+  sourceB.stop();
+  pausedAt = ctx.currentTime - startTime;
+  isPlaying = false;
+}
+
+function updateProgress() {
+  if(!isPlaying) return;
+  const current = ctx.currentTime - startTime;
+  const duration = bufferA.duration;
+  const percent = Math.min((current / duration) * 100, 100);
+  progressEl.style.width = percent + "%";
+  currentTimeEl.textContent = formatTime(current);
+  requestAnimationFrame(updateProgress);
+}
+
+// SEEK
+timeline.addEventListener('click', e=>{
+  if(!bufferA) return;
+  const rect = timeline.getBoundingClientRect();
+  const percent = (e.clientX - rect.left)/rect.width;
+  const newTime = bufferA.duration * percent;
+  pausedAt = newTime;
+
+  if(isPlaying){
+    sourceA.stop();
+    sourceB.stop();
+    isPlaying = false;
+    createSources(newTime);
+  } else {
+    progressEl.style.width = percent*100 + "%";
+    currentTimeEl.textContent = formatTime(newTime);
+  }
+});
+
+// UI
+document.getElementById("playBtn").onclick = async ()=>{
+  if(ctx.state==="suspended") await ctx.resume();
+  play();
+};
+document.getElementById("pauseBtn").onclick = pause;
+
+document.getElementById("btnA").onclick = ()=>{
+  gainA.gain.value = 1;
+  gainB.gain.value = 0;
+  btnA.classList.add("active");
+  btnB.classList.remove("active");
+};
+document.getElementById("btnB").onclick = ()=>{
+  gainA.gain.value = 0;
+  gainB.gain.value = 1;
+  btnB.classList.add("active");
+  btnA.classList.remove("active");
+};
+
+init();
+</script>
 </body>
 </html>
