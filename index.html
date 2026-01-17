@@ -1,79 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reproductor A/B – Jackie Greene</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f0f0f;
-      color: #eaeaea;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .player {
-      background: #161616;
-      border-radius: 12px;
-      padding: 24px;
-      width: 360px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
-    }
-    .title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .subtitle { font-size: 12px; color: #9a9a9a; margin-bottom: 16px; }
-    .ab-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
-    .ab-toggle button {
-      flex: 1;
-      padding: 8px 0;
-      border-radius: 6px;
-      border: 1px solid #333;
-      background: #1f1f1f;
-      color: #aaa;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .ab-toggle button.active { background: #f5b427; color: #000; border-color: #f5b427; }
-    .timeline { height: 4px; background: #2a2a2a; border-radius: 2px; margin-bottom: 8px; overflow: hidden; cursor: pointer; }
-    .progress { height: 100%; width: 0%; background: #f5b427; }
-    .time { display: flex; justify-content: space-between; font-size: 11px; color: #9a9a9a; margin-bottom: 14px; }
-    .controls { display: flex; justify-content: center; gap: 12px; }
-    .controls button { background: #1f1f1f; border: 1px solid #333; color: #eaeaea; width: 44px; height: 44px; border-radius: 50%; font-size: 14px; cursor: pointer; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reproductor A/B – Jackie Greene</title>
+<style>
+  body { margin:0; font-family:system-ui, sans-serif; background:#0f0f0f; color:#eaeaea; display:flex; justify-content:center; align-items:center; height:100vh; }
+  .player { background:#161616; border-radius:12px; padding:24px; width:360px; box-shadow:0 10px 30px rgba(0,0,0,.4); }
+  .title { font-size:14px; font-weight:600; margin-bottom:4px; }
+  .subtitle { font-size:12px; color:#9a9a9a; margin-bottom:16px; }
+  .ab-toggle { display:flex; gap:8px; margin-bottom:16px; }
+  .ab-toggle button { flex:1; padding:8px 0; border-radius:6px; border:1px solid #333; background:#1f1f1f; color:#aaa; cursor:pointer; font-size:12px; }
+  .ab-toggle button.active { background:#f5b427; color:#000; border-color:#f5b427; }
+  .timeline { height:4px; background:#2a2a2a; border-radius:2px; margin-bottom:8px; overflow:hidden; cursor:pointer; }
+  .progress { height:100%; width:0%; background:#f5b427; }
+  .time { display:flex; justify-content:space-between; font-size:11px; color:#9a9a9a; margin-bottom:14px; }
+  .controls { display:flex; justify-content:center; gap:12px; }
+  .controls button { background:#1f1f1f; border:1px solid #333; color:#eaeaea; width:44px; height:44px; border-radius:50%; font-size:14px; cursor:pointer; }
+</style>
 </head>
 <body>
-  <div class="player">
-    <div class="title">Jackie Greene – Don’t let the devil take your mind</div>
-    <div class="subtitle">Comparación educativa</div>
 
-    <div class="ab-toggle">
-      <button id="btnA" class="active">ORIGINAL</button>
-      <button id="btnB">MEZCLA</button>
-    </div>
+<div class="player">
+  <div class="title">Jackie Greene – Don’t let the devil take your mind</div>
+  <div class="subtitle">Comparación educativa</div>
 
-    <div class="timeline" id="timeline">
-      <div class="progress" id="progress"></div>
-    </div>
-
-    <div class="time">
-      <span id="currentTime">0:00</span>
-      <span id="duration">0:00</span>
-    </div>
-
-    <div class="controls">
-      <button id="playBtn">▶︎</button>
-      <button id="pauseBtn">⏸</button>
-    </div>
+  <div class="ab-toggle">
+    <button id="btnA" class="active">ORIGINAL</button>
+    <button id="btnB">MEZCLA</button>
   </div>
 
-<script>
-const audioAUrl = "https://raw.githubusercontent.com/Domabeats/Linksweb/1ae3ebd4d42144f7311b6e8abdfe60a7c810b603/Jackie%20Greene%20-%20Dont%20let%20the%20devil%20take%20your%20mind%20BEFORE.wav";
-const audioBUrl = "https://raw.githubusercontent.com/Domabeats/Linksweb/1ae3ebd4d42144f7311b6e8abdfe60a7c810b603/Jackie%20Greene%20-%20Dont%20let%20the%20devil%20take%20your%20mind%20AFTER.wav";
+  <div class="timeline" id="timeline">
+    <div class="progress" id="progress"></div>
+  </div>
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const ctx = new AudioContext();
+  <div class="time">
+    <span id="currentTime">0:00</span>
+    <span id="duration">0:00</span>
+  </div>
+
+  <div class="controls">
+    <button id="playBtn">▶︎</button>
+    <button id="pauseBtn">⏸</button>
+  </div>
+</div>
+
+<script>
+const audioAUrl = "https://raw.githubusercontent.com/Domabeats/Linksweb/cf1f954283f6a654bdc0b9800d772eafc39146e4/JackieGreene-DontletthedeviltakeyourmindBEFORE.wav";
+const audioBUrl = "https://raw.githubusercontent.com/Domabeats/Linksweb/f0179cbe173aa93f7b1f47b21cd4f08569fd340f/JackieGreene-Dontletthedeviltakeyourmindafter.wav";
+
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
 let bufferA, bufferB;
 let sourceA, sourceB;
@@ -86,6 +62,8 @@ const progressEl = document.getElementById("progress");
 const timeline = document.getElementById("timeline");
 const currentTimeEl = document.getElementById("currentTime");
 const durationEl = document.getElementById("duration");
+const btnA = document.getElementById("btnA");
+const btnB = document.getElementById("btnB");
 
 function formatTime(sec) {
   const m = Math.floor(sec / 60);
@@ -118,8 +96,9 @@ function createSources(offset=0) {
   sourceA.connect(gainA).connect(ctx.destination);
   sourceB.connect(gainB).connect(ctx.destination);
 
-  gainA.gain.value = 1;
-  gainB.gain.value = 0;
+  // Mantener A/B
+  gainA.gain.value = btnA.classList.contains('active') ? 1 : 0;
+  gainB.gain.value = btnB.classList.contains('active') ? 1 : 0;
 
   sourceA.start(0, offset);
   sourceB.start(0, offset);
@@ -131,12 +110,12 @@ function createSources(offset=0) {
 }
 
 function play() {
-  if(isPlaying) return;
+  if (isPlaying) return;
   createSources(pausedAt);
 }
 
 function pause() {
-  if(!isPlaying) return;
+  if (!isPlaying) return;
   sourceA.stop();
   sourceB.stop();
   pausedAt = ctx.currentTime - startTime;
@@ -144,7 +123,7 @@ function pause() {
 }
 
 function updateProgress() {
-  if(!isPlaying) return;
+  if (!isPlaying) return;
   const current = ctx.currentTime - startTime;
   const duration = bufferA.duration;
   const percent = Math.min((current / duration) * 100, 100);
@@ -154,14 +133,14 @@ function updateProgress() {
 }
 
 // SEEK
-timeline.addEventListener('click', e=>{
-  if(!bufferA) return;
+timeline.addEventListener('click', e => {
+  if (!bufferA) return;
   const rect = timeline.getBoundingClientRect();
   const percent = (e.clientX - rect.left)/rect.width;
   const newTime = bufferA.duration * percent;
   pausedAt = newTime;
 
-  if(isPlaying){
+  if (isPlaying) {
     sourceA.stop();
     sourceB.stop();
     isPlaying = false;
@@ -173,19 +152,21 @@ timeline.addEventListener('click', e=>{
 });
 
 // UI
-document.getElementById("playBtn").onclick = async ()=>{
-  if(ctx.state==="suspended") await ctx.resume();
+document.getElementById("playBtn").onclick = async () => {
+  if (ctx.state === "suspended") await ctx.resume();
   play();
 };
+
 document.getElementById("pauseBtn").onclick = pause;
 
-document.getElementById("btnA").onclick = ()=>{
+btnA.onclick = () => {
   gainA.gain.value = 1;
   gainB.gain.value = 0;
   btnA.classList.add("active");
   btnB.classList.remove("active");
 };
-document.getElementById("btnB").onclick = ()=>{
+
+btnB.onclick = () => {
   gainA.gain.value = 0;
   gainB.gain.value = 1;
   btnB.classList.add("active");
@@ -194,5 +175,6 @@ document.getElementById("btnB").onclick = ()=>{
 
 init();
 </script>
+
 </body>
 </html>
