@@ -1,97 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reproductor A/B Jackie Greene</title>
 <style>
-:root {
-  --negro: #0f0f0f;
-  --gris: #555;
-  --verde: #25D366; /* verde WhatsApp */
-  --fondo: #161616;
-  --blanco: #fff;
-}
-body {
-  margin:0;
-  font-family:'Montserrat', sans-serif;
-  background: var(--negro);
-  color: var(--blanco);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-.container {
-  background: var(--fondo);
-  padding:2rem;
-  border-radius:15px;
-  max-width:450px;
-  width:100%;
-  text-align:center;
-  box-shadow:0 8px 30px rgba(0,0,0,0.5);
-}
-.title { font-size:1.4rem; margin-bottom:0.5rem; }
-.subtitle { font-size:0.9rem; color: #bbb; margin-bottom:1.5rem; }
-.buttons { display:flex; gap:8px; margin-bottom:1rem; justify-content:center; }
-#escucharBtn {
-  flex:1;
-  padding:0.7rem 0;
-  border-radius:8px;
-  border:none;
-  background:#000;
-  color:#fff;
-  cursor:pointer;
-  font-size:0.9rem;
-  font-weight:500;
-  transition: background 0.3s;
-}
-button.other {
-  flex:1;
-  padding:0.7rem 0;
-  border-radius:8px;
-  border:none;
-  background:#000; 
-  color:#aaa;
-  cursor:pointer;
-  font-size:0.9rem;
-  font-weight:500;
-}
-button.other.active { background:#555; color:#fff; }
+  :root {
+    --negro: #0f0f0f;
+    --gris: #555;
+    --verde: #25D366;
+    --fondo: #161616;
+    --blanco: #fff;
+  }
+  body {
+    margin:0;
+    font-family:'Montserrat', sans-serif;
+    background: var(--negro);
+    color: var(--blanco);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+  }
+  .container {
+    background: var(--fondo);
+    padding:2rem;
+    border-radius:15px;
+    max-width:500px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  }
+  .title { font-size:1.4rem; margin-bottom:0.5rem; }
+  .subtitle { font-size:0.9rem; color: #bbb; margin-bottom:1.5rem; }
+  .buttons { display:flex; gap:8px; margin-bottom:1rem; justify-content:center; }
+  #escucharBtn {
+    flex:1;
+    padding:0.7rem 0;
+    border-radius:8px;
+    border:none;
+    background:#000;
+    color:#fff;
+    cursor:pointer;
+    font-size:0.9rem;
+    font-weight:500;
+    transition: background 0.3s;
+  }
+  button.other {
+    flex:1;
+    padding:0.7rem 0;
+    border-radius:8px;
+    border:none;
+    background:#000; 
+    color:#aaa;
+    cursor:pointer;
+    font-size:0.9rem;
+    font-weight:500;
+  }
+  button.other.active { background:#555; color:#fff; }
 
-/* Barra de reproducción simple */
-.timeline-container {
-  position: relative;
-  height: 8px;
-  background: #333;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
-.timeline-progress {
-  position: absolute;
-  height: 100%;
-  width: 0%;
-  background: #25D366;
-  border-radius: 4px;
-}
-.timeline-thumb {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
-  background: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-}
+  .timeline-container {
+    position: relative;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  .timeline-progress {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: var(--verde);
+    border-radius: 4px;
+  }
+  .timeline-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="title">Próximamente</div>
- 
+  <div class="title">Jackie Greene – Don’t let the devil take your mind</div>
+  <div class="subtitle">Comparación Original / Mezclado</div>
+
+  <div class="buttons">
+    <button id="escucharBtn">ESCUCHAR</button>
+    <button id="btnA" class="other active">ORIGINAL</button>
+    <button id="btnB" class="other">MEZCLADO</button>
+  </div>
+
+  <div class="timeline-container" id="timeline">
+    <div class="timeline-progress" id="progress"></div>
+    <div class="timeline-thumb" id="thumb"></div>
+  </div>
+
+  <audio id="audioA" preload="auto" src="https://raw.githubusercontent.com/Domabeats/Linksweb/fd1ef96f2184e7c0801de2b967ef26dca639e059/JackieGreeneBEFORE.wav"></audio>
+  <audio id="audioB" preload="auto" src="https://raw.githubusercontent.com/Domabeats/Linksweb/fd1ef96f2184e7c0801de2b967ef26dca639e059/JackieGreeneAFTER.wav"></audio>
+</div>
+
+<script>
+const escucharBtn = document.getElementById("escucharBtn");
+const btnA = document.getElementById("btnA");
+const btnB = document.getElementById("btnB");
+const audioA = document.getElementById("audioA");
+const audioB = document.getElementById("audioB");
+
+const timeline = document.getElementById("timeline");
+const progress = document.getElementById("progress");
+const thumb = document.getElementById("thumb");
+
+let isPlaying = false;
+let isDragging = false;
+
+// Inicialmente solo ORIGINAL audible
+audioA.muted = false;
+audioB.muted = true;
+
+// ESCUCHAR / PAUSAR
+escucharBtn.onclick = () => {
+  if(!isPlaying){
+    audioA.play();
+    audioB.play();
+    isPlaying = true;
+    escucharBtn.style.background = "#25D366";
+    escucharBtn.textContent = "PAUSAR";
+    requestAnimationFrame(updateProgress);
+  } else {
+    audioA.pause();
+    audioB.pause();
+    isPlaying = false;
+    escucharBtn.style.background = "#000";
+    escucharBtn.textContent = "ESCUCHAR";
+  }
+};
+
+// BOTONES ORIGINAL / MEZCLADO
+btnA.onclick = () => {
+  audioA.muted = false;
+  audioB.muted = true;
+  btnA.classList.add("active");
+  btnB.classList.remove("active");
+};
+btnB.onclick = () => {
+  audioA.muted = true;
+  audioB.muted = false;
+  btnB.classList.add("active");
+  btnA.classList.remove("active");
+};
+
+// Actualizar barra y thumb
+function updateProgress(){
+  const activeAudio = audioA.muted ? audioB : audioA;
+  const percent = (activeAudio.currentTime / activeAudio.duration) * 100 || 0;
+
+  if(!isDragging){
+    thumb.style.left = percent + "%";
+  }
+  progress.style.width = percent + "%";
+
+  if(isPlaying){
+    requestAnimationFrame(updateProgress);
+  }
+}
+
+// Click o drag en barra
+function setTime(e){
+  const rect = timeline.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left;
+  const percent = Math.min(Math.max(offsetX / rect.width,0),1);
+  audioA.currentTime = percent * audioA.duration;
+  audioB.currentTime = percent * audioB.duration;
+
+  progress.style.width = (percent*100) + "%";
+  thumb.style.left = (percent*100) + "%";
+}
+
+// Drag eventos
+timeline.addEventListener("click", e => { setTime(e); });
+thumb.addEventListener("mousedown", e => { isDragging = true; });
+window.addEventListener("mousemove", e => { if(isDragging){ setTime(e); }});
+window.addEventListener("mouseup", e => { if(isDragging){ isDragging=false; }});
+</script>
+
 </body>
 </html>
-
