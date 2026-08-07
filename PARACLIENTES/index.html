@@ -1,195 +1,409 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reproductor A/B Jackie Greene</title>
-<style>
-  :root {
-    --negro: #0f0f0f;
-    --gris: #555;
-    --verde: #25D366;
-    --fondo: #161616;
-    --blanco: #fff;
-  }
-  body {
-    margin:0;
-    font-family:'Montserrat', sans-serif;
-    background: var(--negro);
-    color: var(--blanco);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-  }
-  .container {
-    background: var(--fondo);
-    padding:2rem;
-    border-radius:15px;
-    max-width:500px;
-    width:100%;
-    text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,0.5);
-  }
-  .title { font-size:1.4rem; margin-bottom:0.5rem; }
-  .subtitle { font-size:0.9rem; color: #bbb; margin-bottom:1.5rem; }
-  .buttons { display:flex; gap:8px; margin-bottom:1rem; justify-content:center; }
-  #escucharBtn {
-    flex:1;
-    padding:0.7rem 0;
-    border-radius:8px;
-    border:none;
-    background:#000;
-    color:#fff;
-    cursor:pointer;
-    font-size:0.9rem;
-    font-weight:500;
-    transition: background 0.3s;
-  }
-  button.other {
-    flex:1;
-    padding:0.7rem 0;
-    border-radius:8px;
-    border:none;
-    background:#000; 
-    color:#aaa;
-    cursor:pointer;
-    font-size:0.9rem;
-    font-weight:500;
-  }
-  button.other.active { background:#555; color:#fff; }
 
-  .timeline-container {
-    position: relative;
-    height: 8px;
-    background: #333;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    cursor: pointer;
-  }
-  .timeline-progress {
-    position: absolute;
-    height: 100%;
-    width: 0%;
-    background: var(--verde);
-    border-radius: 4px;
-  }
-  .timeline-thumb {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border-radius: 50%;
-    cursor: pointer;
-  }
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Domabeats Mastering</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+html{
+    scroll-behavior:smooth;
+}
+
+
+body{
+
+    background:#000;
+
+    color:#fff;
+
+    font-family:'Montserrat',sans-serif;
+
+    font-weight:300;
+
+}
+
+
+
+/* PORTADA */
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:40px;
+
+}
+
+
+
+.photo{
+
+    width:220px;
+
+    height:220px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    border:2px solid #FFD400;
+
+    margin-bottom:50px;
+
+}
+
+
+
+.photo img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+h1{
+
+    font-size:clamp(2.5rem,6vw,5rem);
+
+    font-weight:400;
+
+    letter-spacing:3px;
+
+}
+
+
+
+.subtitle{
+
+    margin-top:30px;
+
+    display:flex;
+
+    gap:25px;
+
+    font-size:1rem;
+
+    letter-spacing:3px;
+
+}
+
+
+
+.subtitle a{
+
+    color:#fff;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+
+
+.subtitle a:hover{
+
+    color:#FFD400;
+
+}
+
+
+
+
+
+/* SECCIONES */
+
+section{
+
+    min-height:80vh;
+
+    padding:120px 10%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+
+
+h2{
+
+    font-size:clamp(2rem,5vw,4rem);
+
+    font-weight:400;
+
+    margin-bottom:40px;
+
+    letter-spacing:1px;
+
+}
+
+
+
+h2 span{
+
+    color:#FFD400;
+
+}
+
+
+
+p{
+
+    max-width:800px;
+
+    line-height:2;
+
+    color:#ccc;
+
+    font-size:1.1rem;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+
+.photo{
+
+    width:170px;
+
+    height:170px;
+
+}
+
+
+
+.subtitle{
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+
+
+section{
+
+    padding:90px 8%;
+
+}
+
+
+}
+
+
+
 </style>
+
+
 </head>
+
+
 <body>
 
-<div class="container">
-  <div class="title">Jackie Greene – Don’t let the devil take your mind</div>
-  <div class="subtitle">Comparación Original / Mezclado</div>
 
-  <div class="buttons">
-    <button id="escucharBtn">ESCUCHAR</button>
-    <button id="btnA" class="other active">ORIGINAL</button>
-    <button id="btnB" class="other">MEZCLADO</button>
-  </div>
 
-  <div class="timeline-container" id="timeline">
-    <div class="timeline-progress" id="progress"></div>
-    <div class="timeline-thumb" id="thumb"></div>
-  </div>
 
-  <audio id="audioA" preload="auto" src="https://raw.githubusercontent.com/Domabeats/Linksweb/fd1ef96f2184e7c0801de2b967ef26dca639e059/JackieGreeneBEFORE.wav"></audio>
-  <audio id="audioB" preload="auto" src="https://raw.githubusercontent.com/Domabeats/Linksweb/fd1ef96f2184e7c0801de2b967ef26dca639e059/JackieGreeneAFTER.wav"></audio>
+<header class="hero">
+
+
+<div class="photo">
+
+<img src="https://instagram.feze11-1.fna.fbcdn.net/v/t51.82787-19/576148488_18537199711018910_8490004464108347394_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.feze11-1.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2gEztUnQDzByzfA9a5K-7ev1EUusFuUoz5yYJc5w5NiR7HQhwHvu8T0SLuSZZ_oMdcw&_nc_ohc=WmtoRZqKcCYQ7kNvwHdhRCi&_nc_gid=6WQ8XnWaa6KragOQ4BS0RQ&edm=APoiHPcBAAAA&ccb=7-5&oh=00_AQG5-LQPjNyrkqQxCS_qMvKMnLxMOiZ5PNUIAtZapaHhAA&oe=6A7B2209&_nc_sid=22de04" alt="Domabeats Mastering">
+
 </div>
 
-<script>
-const escucharBtn = document.getElementById("escucharBtn");
-const btnA = document.getElementById("btnA");
-const btnB = document.getElementById("btnB");
-const audioA = document.getElementById("audioA");
-const audioB = document.getElementById("audioB");
 
-const timeline = document.getElementById("timeline");
-const progress = document.getElementById("progress");
-const thumb = document.getElementById("thumb");
 
-let isPlaying = false;
-let isDragging = false;
+<h1>
 
-// Inicialmente solo ORIGINAL audible
-audioA.muted = false;
-audioB.muted = true;
+DOMABEATS MASTERING
 
-// ESCUCHAR / PAUSAR
-escucharBtn.onclick = () => {
-  if(!isPlaying){
-    audioA.play();
-    audioB.play();
-    isPlaying = true;
-    escucharBtn.style.background = "#25D366";
-    escucharBtn.textContent = "PAUSAR";
-    requestAnimationFrame(updateProgress);
-  } else {
-    audioA.pause();
-    audioB.pause();
-    isPlaying = false;
-    escucharBtn.style.background = "#000";
-    escucharBtn.textContent = "ESCUCHAR";
-  }
-};
+</h1>
 
-// BOTONES ORIGINAL / MEZCLADO
-btnA.onclick = () => {
-  audioA.muted = false;
-  audioB.muted = true;
-  btnA.classList.add("active");
-  btnB.classList.remove("active");
-};
-btnB.onclick = () => {
-  audioA.muted = true;
-  audioB.muted = false;
-  btnB.classList.add("active");
-  btnA.classList.remove("active");
-};
 
-// Actualizar barra y thumb
-function updateProgress(){
-  const activeAudio = audioA.muted ? audioB : audioA;
-  const percent = (activeAudio.currentTime / activeAudio.duration) * 100 || 0;
 
-  if(!isDragging){
-    thumb.style.left = percent + "%";
-  }
-  progress.style.width = percent + "%";
+<div class="subtitle">
 
-  if(isPlaying){
-    requestAnimationFrame(updateProgress);
-  }
-}
 
-// Click o drag en barra
-function setTime(e){
-  const rect = timeline.getBoundingClientRect();
-  const offsetX = e.clientX - rect.left;
-  const percent = Math.min(Math.max(offsetX / rect.width,0),1);
-  audioA.currentTime = percent * audioA.duration;
-  audioB.currentTime = percent * audioB.duration;
+<a href="#masterizacion">
 
-  progress.style.width = (percent*100) + "%";
-  thumb.style.left = (percent*100) + "%";
-}
+MASTERIZACIÓN
 
-// Drag eventos
-timeline.addEventListener("click", e => { setTime(e); });
-thumb.addEventListener("mousedown", e => { isDragging = true; });
-window.addEventListener("mousemove", e => { if(isDragging){ setTime(e); }});
-window.addEventListener("mouseup", e => { if(isDragging){ isDragging=false; }});
-</script>
+</a>
+
+
+<a href="#mezcla">
+
+MEZCLA
+
+</a>
+
+
+<a href="#grabacion">
+
+GRABACIÓN
+
+</a>
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+
+
+<section id="masterizacion">
+
+
+<h2>
+
+<span>Masterización</span>
+
+</h2>
+
+
+<p>
+
+Aquí irá el texto explicando tu filosofía de masterización,
+tu metodología de trabajo y cómo buscás llevar cada canción
+a su máximo potencial.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<section id="mezcla">
+
+
+<h2>
+
+<span>Mezcla</span>
+
+</h2>
+
+
+<p>
+
+Aquí irá el texto sobre mezcla,
+procesamiento, balance, dinámica y tu forma de trabajar.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<section id="grabacion">
+
+
+<h2>
+
+<span>Grabación</span>
+
+</h2>
+
+
+<p>
+
+Aquí irá el texto sobre grabación vocal,
+producción y acompañamiento artístico.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<section id="sobre-mi">
+
+
+<h2>
+
+<span>Sobre mí</span>
+
+</h2>
+
+
+<p>
+
+Aquí irá tu texto personal.
+
+Tu historia, experiencia,
+forma de trabajar y filosofía como profesional.
+
+</p>
+
+
+</section>
+
+
 
 </body>
+
 </html>
