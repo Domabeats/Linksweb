@@ -2,7 +2,7 @@
 <html lang="es-AR"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cómo elegir tu próxima interfaz</title>
+<title>Eligiendo tu próxima interfaz de audio</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <style>
 :root{--gold:#d4a72c;--line:#2c2a26}
@@ -84,16 +84,16 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
    <!-- PORTADA -->
    <section class="view active" data-view="0" aria-labelledby="h-cover">
     <div class="rounded-2xl px-7 sm:px-12 py-16 sm:py-24" style="background:linear-gradient(160deg,#0d0d0d,#1a1a1a,#6b4d10)">
-     <p class="eyebrow mb-5" style="color:#d4a72c;font-size:13px">Guía práctica para artistas</p>
-     <h1 id="h-cover" tabindex="-1" class="font-extrabold max-w-xl" style="color:#fff;font-size:56px;line-height:1.05">Cómo elegir tu próxima interfaz</h1>
-     <p class="mt-6 max-w-lg" style="color:#e8e2d6;font-size:19px;line-height:1.6">11 puntos para decidir con criterio, según lo que realmente necesitás resolver en el estudio y en vivo.</p>
-     <p class="mt-8 max-w-lg" style="color:#c9c1b2;font-size:15px">Leé cada punto, elegí tus opciones y tocá "Marcar como revisado" para avanzar. Si alguno de los puntos todavía no lo tenés decidido, también podés marcarlo como revisado y continuar sin responder. Al final dejás tu mail y te envío tu resultado.</p>
-     <button type="button" data-go="1" class="mt-6 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110" style="background:#d4a72c;color:#121212">
-      Empezar por el punto 01 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+     <p class="eyebrow mb-5" style="color:#d4a72c;font-size:13px">Asistente guía para artistas y productores</p>
+     <h1 id="h-cover" tabindex="-1" class="font-extrabold max-w-xl" style="color:#fff;font-size:56px;line-height:1.05">Eligiendo tu próxima interfaz de audio</h1>
+     <p class="mt-6 max-w-lg" style="color:#e8e2d6;font-size:19px;line-height:1.6">11 preguntas clave que te ayudarán a encontrar la interfaz que más se adapta a tus necesidades en el estudio o en vivo.</p>
+     <button type="button" data-go="1" class="mt-8 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110" style="background:#d4a72c;color:#121212">
+      Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>
      </button>
     </div>
     <div class="card rounded-2xl mt-6 px-7 sm:px-12 py-10">
-     <p class="reading" style="font-size:18px">Elegir una interfaz de audio no debería empezar por la ficha técnica. Debería empezar por vos: qué estás tratando de resolver, en qué etapa estás y con qué presupuesto contás. Esta guía ordena los criterios de compra de lo más humano a lo más técnico, para que puedas decidir sin perderte en specs que quizás ni te importan.</p>
+     <p class="reading" style="font-size:18px">Elegir una interfaz de audio debería comenzar por vos, por tus necesidades y lo que estás tratando de resolver. En base a la etapa en la que se encuentre tu proyecto y el presupuesto con el que contás.</p>
+     <p class="reading mt-4" style="font-size:18px">Este asistente te ayudará a ordenar los criterios de compra partiendo de lo más humano hasta lo más técnico. Para que puedas decidir sin perderte en specs que quizás ni te importan.</p>
     </div>
    </section>
 
@@ -137,7 +137,7 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
      <!-- Paso 2: confirmación -->
      <div id="done" class="hidden">
       <h2 id="h-done" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Tu resultado</h2>
-      <p class="mt-2" style="color:#4a443a">Este es el checklist con tus preferencias. También te lo envío a <strong id="done-email"></strong>; si no lo ves, fijate en spam.</p>
+      <p class="mt-2" style="color:#4a443a">Este es el checklist con tus preferencias. Copialo más abajo y pegalo en un chat de IA para que te ayude a encontrar modelos.</p>
       <ul id="exam" class="mt-6 grid sm:grid-cols-2 gap-2"></ul>
 
       <div class="rounded-2xl mt-8 px-7 sm:px-12 py-14 border" style="border-color:var(--line);background:#141414">
@@ -195,7 +195,7 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
 
 <script>
 /* ====== CONFIGURACIÓN ====== */
-const WEB3FORMS_KEY='5caeb41a-807b-483a-8336-866506397a41'; // <- pegá acá tu access key de Web3Forms
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbyJ0oi6Xakj2zvWBIll2L82yHyMd1w9MQ1Hb9N-89ulhKJSNTU_106b_nUKPytm_Mp1/exec'; // planilla de Google donde se guardan los mails
 
 const S1='Lo primero: tu situación',
       S2='Lo que resuelve tu día a día',
@@ -207,7 +207,7 @@ const M=[
 {n:1,s:S1,t:'Tarea',
  k:'tarea antes que nada defini para que la vas a usar producir in the box grabar voz banda mezcla mastering en vivo filtro',
  b:'Antes que nada, definí para qué la vas a usar. Cada tarea requiere sus propios features y este punto es el filtro que ordena todos los demás.',
- g:[{id:'tarea',l:'Tarea',o:['Producir in the box','Grabar Voz','Grabar Voz + 1 instrumento','Grabar banda','Mezcla/mastering','Procesar voz en vivo']}]},
+ g:[{id:'tarea',l:'Tarea',o:['Producir','Grabar','Mezclar / Masterizar','Procesar en vivo']}]},
 
 {n:2,s:S1,t:'Presupuesto',
  k:'presupuesto recomendacion inutil modelos pagar escalon de precio usd',
@@ -216,7 +216,7 @@ const M=[
 
 {n:3,s:S2,t:'In / Outs',tag:'Incluye phantom power',
  k:'in outs incluye phantom power entradas salidas canales voz beat banda preamps simultaneos microfonos condenser alimentacion phantom +48v xlr plug combo hi-z conectores tipo de entrada auriculares headphones ninguna',
- b:'Cuántas entradas y salidas necesitás según tu tarea: uno o dos canales alcanzan para voz y beat, pero una banda grabando junta necesita varios preamps simultáneos. Si vas a usar micrófonos condenser, revisá también que la interfaz tenga alimentación phantom (+48V) en esas entradas — es un detalle chico que mucha gente olvida chequear y después no puede grabar lo que necesita.',
+ b:'Contá cuántas entradas y salidas necesitás según lo que vayas a grabar al mismo tiempo. Para voz y beat alcanzan 1 o 2 canales; una banda necesita varios. Si usás micrófonos condenser, chequeá que las entradas tengan phantom power (+48V).',
  g:[
   {id:'ent14',l:'Entradas 1/4',o:['Ninguna',...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))],c:'grid-cols-2'},
   {id:'entxlr',l:'Entradas XLR',o:['Ninguna',...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))],c:'grid-cols-2'},
@@ -225,11 +225,11 @@ const M=[
   {id:'aur',l:'Salidas de auriculares',o:[1,2,3,4].map(x=>x+(x===1?' salida':' salidas')),c:'grid-cols-2'}
  ],
  two:1,
- x:'No todas las entradas y salidas son iguales. Las XLR están pensadas para micrófonos y suelen tener preamp con phantom power. Las de plug 1/4" reciben instrumentos como guitarra o bajo directos (Hi-Z) o equipos con salida de línea. Las combo aceptan ambos conectores en el mismo lugar, así que contalas en la columna que vayas a usar. Lo mismo vale para las salidas: además de los monitores, puede que quieras salir a hardware externo o a monitoreo por cable balanceado. Contá cuántas necesitás de cada tipo según lo que vayas a grabar al mismo tiempo.'},
+ x:'XLR: para micrófonos, con preamp y phantom power. 1/4": para guitarra, bajo o equipos de línea. Las combo aceptan ambos: contalas donde las vayas a usar. En las salidas, sumá las de tus monitores y las de cualquier equipo externo.'},
 
 {n:4,s:S2,t:'Calidad de los preamps',
  k:'calidad de los preamps cuatro entradas buenas ruido coloracion cadena mezcla cantidad de preamps',
- b:'No es lo mismo tener cuatro entradas que tener cuatro entradas buenas. Un preamp de mala calidad mete ruido y coloración desde el primer eslabón de la cadena, y eso es algo que después, en la mezcla, no se puede arreglar del todo.',
+ b:'Más preamps no siempre es mejor. Con un presupuesto fijo, sumar canales suele bajar la calidad de cada uno, y mantenerla sale más caro. Pedí solo los que vas a usar al mismo tiempo.',
  g:[{id:'preamps',l:'Preamps',o:['Ninguno',...[1,2,4,6,8].map(x=>x+' preamp')],c:'grid-cols-2 sm:grid-cols-3'}]},
 
 {n:5,s:S2,t:'Procesamiento DSP',
@@ -521,23 +521,19 @@ $('#gate-form').addEventListener('submit',async e=>{
  gateMsg.textContent='';
 
  try{
-  const r=await fetch('https://api.web3forms.com/submit',{
+  const safe=v=>/^[=+\-@]/.test(v)?' '+v:v;
+  await fetch(SHEETS_URL,{
    method:'POST',
-   headers:{'Content-Type':'application/json',Accept:'application/json'},
+   mode:'no-cors',
+   headers:{'Content-Type':'text/plain;charset=utf-8'},
    body:JSON.stringify({
-    access_key:WEB3FORMS_KEY,
-    subject:'Nuevo resultado de la guía: '+email,
-    from_name:'Guía de interfaces',
-    email:email,
-    pais:country||'No indicó',
-    checklist:buildChecklist()
+    email:safe(email),
+    pais:safe(country||'No indicó'),
+    checklist:safe(buildChecklist())
    })
   });
-  const d=await r.json();
-  if(!d.success)throw new Error('fail');
 
   sent=true;
-  $('#done-email').textContent=email;
   $('#country-copy').value=country;
   updatePreview();
   $('#gate').classList.add('hidden');
