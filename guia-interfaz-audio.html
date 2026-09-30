@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es-AR"><head>
 <meta charset="UTF-8">
@@ -27,6 +26,7 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
 .mark-btn[aria-pressed=true]{background:#1f3a24;border-color:#1f3a24}
 .mark-btn[aria-pressed=true] .off,.mark-btn[aria-pressed=false] .on{display:none}
 .bignum{line-height:.9;font-variant-numeric:tabular-nums}
+#send-btn:disabled{opacity:.4;cursor:not-allowed;filter:none}
 @media (max-width:1023px){#sidebar.closed{display:none}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
@@ -34,350 +34,169 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
 </head>
 <body class="w-full min-h-screen">
 
-<a href="#view-area" class="sr-only focus:not-sr-only focus:absolute focus:p-3 focus:bg-black focus:text-white">
- Ir al contenido
-</a>
+<a href="#view-area" class="sr-only focus:not-sr-only focus:absolute focus:p-3 focus:bg-black focus:text-white">Ir al contenido</a>
 
 <header class="sticky top-0 z-30 w-full border-b" style="border-color:var(--line);background:#121212">
  <div class="flex items-center gap-4 px-5 lg:px-8 py-3">
   <p class="eyebrow" style="color:#d4a72c;font-size:12px">Domabeats</p>
-
   <div class="flex-1 flex items-center gap-3 min-w-0">
-   <div class="flex-1 h-2 rounded-full overflow-hidden"
-        style="background:#2c2a26"
-        role="progressbar"
-        id="progressbar"
-        aria-valuemin="0"
-        aria-valuemax="11"
-        aria-valuenow="0"
-        aria-label="Puntos revisados">
-    <div id="progress-fill"
-         class="h-full rounded-full transition-all duration-500"
-         style="width:0;background:var(--gold)">
-    </div>
+   <div class="flex-1 h-2 rounded-full overflow-hidden" style="background:#2c2a26" role="progressbar" id="progressbar" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0" aria-label="Puntos revisados">
+    <div id="progress-fill" class="h-full rounded-full transition-all duration-500" style="width:0;background:var(--gold)"></div>
    </div>
-
-   <span id="progress-count"
-         class="font-bold tabular-nums"
-         style="color:#f7f2e7;font-size:14px">
-    0/11
-   </span>
-
-   <span class="hidden sm:inline"
-         style="color:#c9c1b2;font-size:14px">
-    revisados
-   </span>
+   <span id="progress-count" class="font-bold tabular-nums" style="color:#f7f2e7;font-size:14px">0/11</span>
+   <span class="hidden sm:inline" style="color:#c9c1b2;font-size:14px">revisados</span>
   </div>
-
-  <button id="menu-toggle"
-          type="button"
-          class="lg:hidden px-4 py-2 min-h-[44px] rounded-lg border"
-          style="border-color:#4a443a;background:#1a1a1a;color:#f7f2e7"
-          aria-expanded="false"
-          aria-controls="sidebar">
-   Índice
-  </button>
+  <button id="menu-toggle" type="button" class="lg:hidden px-4 py-2 min-h-[44px] rounded-lg border" style="border-color:#4a443a;background:#1a1a1a;color:#f7f2e7" aria-expanded="false" aria-controls="sidebar">Índice</button>
  </div>
 </header>
 
 <div class="w-full lg:flex">
 
- <nav id="sidebar"
-      aria-label="Índice de la guía"
-      class="closed lg:block lg:w-80 lg:shrink-0 lg:sticky lg:top-[61px] lg:h-[calc(100vh-61px)] overflow-y-auto border-r px-5 py-6"
-      style="border-color:var(--line);background:#161616">
+ <nav id="sidebar" aria-label="Índice de la guía" class="closed lg:block lg:w-80 lg:shrink-0 lg:sticky lg:top-[61px] lg:h-[calc(100vh-61px)] overflow-y-auto border-r px-5 py-6" style="border-color:var(--line);background:#161616">
 
-  <label for="search-input"
-         class="block mb-2"
-         style="color:#f7f2e7;font-size:14px">
-   Buscar en la guía
-  </label>
-
+  <label for="search-input" class="block mb-2" style="color:#f7f2e7;font-size:14px">Buscar en la guía</label>
   <div class="relative">
-   <i data-lucide="search"
-      class="absolute left-3 top-3 w-4 h-4"
-      style="color:#8f877a"></i>
-
-   <input id="search-input"
-          type="search"
-          class="w-full rounded-lg pl-9 pr-3 py-2 min-h-[44px] border"
-          style="border-color:#4a443a;background:#1f1f1f;color:#f7f2e7"
-          autocomplete="off"
-          placeholder="Ej.: latencia, ADAT, phantom">
+   <i data-lucide="search" class="absolute left-3 top-3 w-4 h-4" style="color:#8f877a"></i>
+   <input id="search-input" type="search" class="w-full rounded-lg pl-9 pr-3 py-2 min-h-[44px] border" style="border-color:#4a443a;background:#1f1f1f;color:#f7f2e7" autocomplete="off" placeholder="Ej.: latencia, ADAT, phantom">
   </div>
 
-  <div class="flex flex-wrap gap-2 mt-3"
-       role="group"
-       aria-label="Filtros rápidos">
-
-   <button type="button"
-           class="chip px-3 py-1.5 min-h-[40px] rounded-full border"
-           style="border-color:#4a443a;color:#ece7dc"
-           data-filter="estudio"
-           aria-pressed="false">
-    Estudio
-   </button>
-
-   <button type="button"
-           class="chip px-3 py-1.5 min-h-[40px] rounded-full border"
-           style="border-color:#4a443a;color:#ece7dc"
-           data-filter="grabacion"
-           aria-pressed="false">
-    Grabación
-   </button>
-
-   <button type="button"
-           class="chip px-3 py-1.5 min-h-[40px] rounded-full border"
-           style="border-color:#4a443a;color:#ece7dc"
-           data-filter="vivo"
-           aria-pressed="false">
-    En vivo
-   </button>
-
-   <button type="button"
-           class="chip px-3 py-1.5 min-h-[40px] rounded-full border"
-           style="border-color:#4a443a;color:#ece7dc"
-           data-filter="streaming"
-           aria-pressed="false">
-    Streaming
-   </button>
+  <div class="flex flex-wrap gap-2 mt-3" role="group" aria-label="Filtros rápidos">
+   <button type="button" class="chip px-3 py-1.5 min-h-[40px] rounded-full border" style="border-color:#4a443a;color:#ece7dc" data-filter="estudio" aria-pressed="false">Estudio</button>
+   <button type="button" class="chip px-3 py-1.5 min-h-[40px] rounded-full border" style="border-color:#4a443a;color:#ece7dc" data-filter="grabacion" aria-pressed="false">Grabación</button>
+   <button type="button" class="chip px-3 py-1.5 min-h-[40px] rounded-full border" style="border-color:#4a443a;color:#ece7dc" data-filter="vivo" aria-pressed="false">En vivo</button>
+   <button type="button" class="chip px-3 py-1.5 min-h-[40px] rounded-full border" style="border-color:#4a443a;color:#ece7dc" data-filter="streaming" aria-pressed="false">Streaming</button>
   </div>
 
-  <div class="mt-4 rounded-xl border px-4 py-4"
-       style="border-color:#4a443a;background:#1d1d1d">
-
-   <p class="font-bold"
-      style="color:#d4a72c;font-size:13px">
-    ¿Tenés dudas sobre algún punto?
-   </p>
-
-   <p class="mt-1"
-      style="color:#c9c1b2;font-size:13px;line-height:1.55">
-    No pasa nada. Si todavía no estás seguro, podés tocar
-    <strong style="color:#f7f2e7">“Marcar como revisado”</strong>
-    y saltearlo para continuar.
-   </p>
+  <div class="mt-4 rounded-xl border px-4 py-4" style="border-color:#4a443a;background:#1d1d1d">
+   <p class="font-bold" style="color:#d4a72c;font-size:13px">¿Tenés dudas sobre algún punto?</p>
+   <p class="mt-1" style="color:#c9c1b2;font-size:13px;line-height:1.55">No pasa nada. Si todavía no estás seguro, podés tocar <strong style="color:#f7f2e7">“Marcar como revisado”</strong> y saltearlo para continuar.</p>
   </div>
 
-  <p id="match-info"
-     class="mt-2 text-sm min-h-[1.25rem]"
-     style="color:#c9c1b2"
-     aria-live="polite"></p>
-
+  <p id="match-info" class="mt-2 text-sm min-h-[1.25rem]" style="color:#c9c1b2" aria-live="polite"></p>
   <ul id="nav-list" class="mt-4 space-y-1"></ul>
  </nav>
 
- <main id="view-area"
-       class="flex-1 min-w-0 px-5 sm:px-8 lg:px-14 py-8 lg:py-12">
-
+ <main id="view-area" class="flex-1 min-w-0 px-5 sm:px-8 lg:px-14 py-8 lg:py-12">
   <div class="max-w-3xl mx-auto">
 
    <p id="live" class="sr-only" aria-live="polite"></p>
 
-   <section class="view active"
-            data-view="0"
-            aria-labelledby="h-cover">
-
-    <div class="rounded-2xl px-7 sm:px-12 py-16 sm:py-24"
-         style="background:linear-gradient(160deg,#0d0d0d,#1a1a1a,#6b4d10)">
-
-     <p class="eyebrow mb-5"
-        style="color:#d4a72c;font-size:13px">
-      Guía práctica para artistas
-     </p>
-
-     <h1 id="h-cover"
-         tabindex="-1"
-         class="font-extrabold max-w-xl"
-         style="color:#fff;font-size:56px;line-height:1.05">
-      Cómo elegir tu próxima interfaz
-     </h1>
-
-     <p class="mt-6 max-w-lg"
-        style="color:#e8e2d6;font-size:19px;line-height:1.6">
-      11 puntos para decidir con criterio, según lo que realmente necesitás resolver en el estudio y en vivo.
-     </p>
-
-     <p class="mt-8 max-w-lg"
-        style="color:#c9c1b2;font-size:15px">
-      Leé cada punto, elegí tus opciones y tocá "Marcar como revisado" para avanzar.
-      Si alguno de los puntos todavía no lo tenés decidido, también podés marcarlo como revisado y continuar sin responder.
-      Al final vas a ver tu resultado.
-     </p>
-
-     <button type="button"
-             data-go="1"
-             class="mt-6 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110"
-             style="background:#d4a72c;color:#121212">
-      Empezar
-      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+   <!-- PORTADA -->
+   <section class="view active" data-view="0" aria-labelledby="h-cover">
+    <div class="rounded-2xl px-7 sm:px-12 py-16 sm:py-24" style="background:linear-gradient(160deg,#0d0d0d,#1a1a1a,#6b4d10)">
+     <p class="eyebrow mb-5" style="color:#d4a72c;font-size:13px">Guía práctica para artistas</p>
+     <h1 id="h-cover" tabindex="-1" class="font-extrabold max-w-xl" style="color:#fff;font-size:56px;line-height:1.05">Cómo elegir tu próxima interfaz</h1>
+     <p class="mt-6 max-w-lg" style="color:#e8e2d6;font-size:19px;line-height:1.6">11 puntos para decidir con criterio, según lo que realmente necesitás resolver en el estudio y en vivo.</p>
+     <p class="mt-8 max-w-lg" style="color:#c9c1b2;font-size:15px">Leé cada punto, elegí tus opciones y tocá "Marcar como revisado" para avanzar. Si alguno de los puntos todavía no lo tenés decidido, también podés marcarlo como revisado y continuar sin responder. Al final dejás tu mail y te envío tu resultado.</p>
+     <button type="button" data-go="1" class="mt-6 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110" style="background:#d4a72c;color:#121212">
+      Empezar por el punto 01 <i data-lucide="arrow-right" class="w-4 h-4"></i>
      </button>
     </div>
-
     <div class="card rounded-2xl mt-6 px-7 sm:px-12 py-10">
-     <p class="reading" style="font-size:18px">
-      Elegir una interfaz de audio no debería empezar por la ficha técnica.
-      Debería empezar por vos: qué estás tratando de resolver, en qué etapa estás y con qué presupuesto contás.
-      Esta guía ordena los criterios de compra de lo más humano a lo más técnico,
-      para que puedas decidir sin perderte en specs que quizás ni te importan.
-     </p>
+     <p class="reading" style="font-size:18px">Elegir una interfaz de audio no debería empezar por la ficha técnica. Debería empezar por vos: qué estás tratando de resolver, en qué etapa estás y con qué presupuesto contás. Esta guía ordena los criterios de compra de lo más humano a lo más técnico, para que puedas decidir sin perderte en specs que quizás ni te importan.</p>
     </div>
    </section>
 
    <div id="modules"></div>
 
-   <section class="view"
-            data-view="12"
-            aria-labelledby="h-sum">
-
+   <!-- RESULTADO (con captura de mail) -->
+   <section class="view" data-view="12" aria-labelledby="h-sum">
     <div class="card rounded-2xl px-7 sm:px-12 py-10">
 
-     <h2 id="h-sum"
-         tabindex="-1"
-         class="font-extrabold"
-         style="color:#121212;font-size:26px">
-      Resultado del examen
-     </h2>
-
-     <p class="mt-2" style="color:#4a443a">
-      Este es el checklist con tus preferencias.
-      <span id="summary-count" class="font-bold tabular-nums">0/11</span>
-      puntos revisados ·
-      <span id="chosen-count" class="font-bold tabular-nums">0/0</span>
-      opciones elegidas.
-     </p>
-
-     <ul id="exam"
-         class="mt-6 grid sm:grid-cols-2 gap-2"></ul>
-
-     <!-- BLOQUE DE CONTACTO / INSTAGRAM -->
-     <div class="rounded-2xl mt-8 px-7 sm:px-12 py-14 border"
-          style="border-color:var(--line);background:#141414">
-
-      <p class="font-extrabold max-w-2xl"
-         style="color:#fff;font-size:34px;line-height:1.2">
-       Una buena interfaz no te hace sonar bien. Te deja escuchar la verdad.
+     <!-- Paso 1: pedir el mail -->
+     <div id="gate">
+      <h2 id="h-sum" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Tu resultado está listo</h2>
+      <p class="mt-2" style="color:#4a443a">
+       Revisaste <span id="summary-count" class="font-bold tabular-nums">0/11</span> puntos y elegiste
+       <span id="chosen-count" class="font-bold tabular-nums">0/0</span> opciones.
       </p>
+      <p class="reading mt-4" style="font-size:17px">Dejame tu mail y te envío tu checklist con las opciones que elegiste, listo para llevarlo a la tienda o pegarlo en una IA.</p>
 
-      <p class="reading mt-6 max-w-xl"
-         style="color:#e0daCD;font-size:18px">
-       Elegir bien tu interfaz es el primer paso de una cadena que después yo puedo pulir,
-       pero no puedo reemplazar. Si ya grabaste tu material y querés que suene como corresponde,
-       hablemos de mezcla y masterización.
-      </p>
+      <form id="gate-form" class="mt-6" novalidate>
+       <label for="email" class="block font-bold" style="color:#6b4d10;font-size:14px">Tu mail</label>
+       <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required placeholder="tu@mail.com"
+              class="w-full sm:w-96 mt-1 rounded-lg px-3 py-2 min-h-[48px] border-2"
+              style="border-color:#8a6414;background:#fff;color:#121212">
 
-      <a href="https://ig.me/m/ezequieldomabeats"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="mt-8 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110"
-         style="background:#d4a72c;color:#121212">
+       <label for="country" class="block mt-4 font-bold" style="color:#6b4d10;font-size:14px">Tu país (opcional)</label>
+       <input id="country" name="country" type="text" autocomplete="country-name" placeholder="Ej.: Argentina"
+              class="w-full sm:w-96 mt-1 rounded-lg px-3 py-2 min-h-[48px] border-2"
+              style="border-color:#8a6414;background:#fff;color:#121212">
+       <p class="mt-1" style="color:#6b6255;font-size:13px">Me sirve para orientarte con modelos que se consigan donde vivís.</p>
 
-       Ezequiel Domabeats — Instagram
-
-       <i data-lucide="instagram"
-          class="w-4 h-4"></i>
-      </a>
-     </div>
-
-     <!-- COPIAR OPCIONES -->
-     <div class="mt-8 pt-6 border-t"
-          style="border-color:#d9d0bd">
-
-      <h3 class="font-extrabold"
-          style="color:#121212;font-size:18px">
-       Llevate tu resultado a una IA
-      </h3>
-
-      <p class="mt-1"
-         style="color:#4a443a;font-size:15px">
-       Copiá tus respuestas y pegalas en un chat de IA para que te ayude a encontrar modelos disponibles en tu país.
-      </p>
-
-      <label for="country"
-             class="block mt-4 font-bold"
-             style="color:#6b4d10;font-size:14px">
-       Tu país (opcional)
-      </label>
-
-      <input id="country"
-             type="text"
-             autocomplete="country-name"
-             placeholder="Ej.: Argentina"
-             class="w-full sm:w-72 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2"
-             style="border-color:#8a6414;background:#fff;color:#121212">
-
-      <label for="preview"
-             class="block mt-4 font-bold"
-             style="color:#6b4d10;font-size:14px">
-       Vista previa del texto
-      </label>
-
-      <textarea id="preview"
-                readonly
-                rows="9"
-                class="w-full mt-1 rounded-lg px-3 py-2 border-2"
-                style="border-color:#d9d0bd;background:#fff;color:#2a2723;font-size:14px"></textarea>
-
-      <div class="flex flex-wrap items-center gap-3 mt-4">
-
-       <button id="copy-btn"
-               type="button"
-               class="inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110"
+       <button id="send-btn" type="submit" disabled
+               class="mt-6 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110"
                style="background:#121212;color:#f7f2e7">
-
-        <i data-lucide="copy" class="w-4 h-4"></i>
-        COPIAR
+        <i data-lucide="mail" class="w-4 h-4"></i>
+        <span id="send-label">Recibir mi resultado</span>
        </button>
-
-       <span id="copy-msg"
-             class="font-medium"
-             style="color:#1f5a2c"
-             role="status"
-             aria-live="polite"></span>
-      </div>
+       <p id="gate-msg" class="mt-3 font-medium" style="color:#8a2b1f;font-size:14px" role="alert"></p>
+      </form>
      </div>
 
-     <button id="reset-btn"
-             type="button"
-             class="mt-6 inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border-2 font-bold hover:brightness-95"
-             style="background:#f7f2e7;color:#121212;border-color:#121212">
+     <!-- Paso 2: confirmación -->
+     <div id="done" class="hidden">
+      <h2 id="h-done" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Tu resultado</h2>
+      <p class="mt-2" style="color:#4a443a">Este es el checklist con tus preferencias. También te lo envío a <strong id="done-email"></strong>; si no lo ves, fijate en spam.</p>
+      <ul id="exam" class="mt-6 grid sm:grid-cols-2 gap-2"></ul>
 
-      <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-      Reiniciar todo
-     </button>
+      <div class="rounded-2xl mt-8 px-7 sm:px-12 py-14 border" style="border-color:var(--line);background:#141414">
+       <p class="font-extrabold max-w-2xl" style="color:#fff;font-size:34px;line-height:1.2">Una buena interfaz no te hace sonar bien. Te deja escuchar la verdad.</p>
+       <p class="reading mt-6 max-w-xl" style="color:#e0dacd;font-size:18px">Elegir bien tu interfaz es el primer paso de una cadena que después yo puedo pulir, pero no puedo reemplazar. Si ya grabaste tu material y querés que suene como corresponde, hablemos de mezcla y masterización.</p>
+       <a href="https://ig.me/m/ezequieldomabeats" target="_blank" rel="noopener noreferrer"
+          class="mt-8 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110"
+          style="background:#d4a72c;color:#121212">
+        Ezequiel Domabeats — Instagram <i data-lucide="instagram" class="w-4 h-4"></i>
+       </a>
+      </div>
+
+      <div class="mt-8 pt-6 border-t" style="border-color:#d9d0bd">
+       <h3 class="font-extrabold" style="color:#121212;font-size:18px">Llevate tu resultado a una IA</h3>
+       <p class="mt-1" style="color:#4a443a;font-size:15px">Copiá tus respuestas y pegalas en un chat de IA para que te ayude a encontrar modelos disponibles en tu país.</p>
+
+       <label for="country-copy" class="block mt-4 font-bold" style="color:#6b4d10;font-size:14px">Tu país (opcional)</label>
+       <input id="country-copy" type="text" autocomplete="country-name" placeholder="Ej.: Argentina"
+              class="w-full sm:w-72 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2"
+              style="border-color:#8a6414;background:#fff;color:#121212">
+
+       <label for="preview" class="block mt-4 font-bold" style="color:#6b4d10;font-size:14px">Vista previa del texto</label>
+       <textarea id="preview" readonly rows="9" class="w-full mt-1 rounded-lg px-3 py-2 border-2" style="border-color:#d9d0bd;background:#fff;color:#2a2723;font-size:14px"></textarea>
+
+       <div class="flex flex-wrap items-center gap-3 mt-4">
+        <button id="copy-btn" type="button" class="inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110" style="background:#121212;color:#f7f2e7">
+         <i data-lucide="copy" class="w-4 h-4"></i> COPIAR
+        </button>
+        <span id="copy-msg" class="font-medium" style="color:#1f5a2c" role="status" aria-live="polite"></span>
+       </div>
+      </div>
+
+      <button id="reset-btn" type="button" class="mt-6 inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border-2 font-bold hover:brightness-95" style="background:#f7f2e7;color:#121212;border-color:#121212">
+       <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reiniciar todo
+      </button>
+     </div>
+
     </div>
    </section>
 
    <div class="flex items-center justify-between gap-3 mt-8">
-
-    <button id="prev-btn"
-            type="button"
-            class="inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border font-bold disabled:opacity-30"
-            style="border-color:#4a443a;background:#1a1a1a;color:#f7f2e7">
-
-     <i data-lucide="arrow-left" class="w-4 h-4"></i>
-     Anterior
+    <button id="prev-btn" type="button" class="inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border font-bold disabled:opacity-30" style="border-color:#4a443a;background:#1a1a1a;color:#f7f2e7">
+     <i data-lucide="arrow-left" class="w-4 h-4"></i> Anterior
     </button>
-
-    <span id="position"
-          class="text-sm tabular-nums"
-          style="color:#c9c1b2"></span>
+    <span id="position" class="text-sm tabular-nums" style="color:#c9c1b2"></span>
    </div>
 
   </div>
  </main>
 </div>
 
-<footer class="w-full px-5 lg:px-14 py-8 border-t"
-        style="border-color:var(--line)">
-
- <p class="text-center"
-    style="color:#a8a092;font-size:14px">
-  Por Ezequiel Domabeats — Ingeniería de mezcla y masterización
- </p>
+<footer class="w-full px-5 lg:px-14 py-8 border-t" style="border-color:var(--line)">
+ <p class="text-center" style="color:#a8a092;font-size:14px">Por Ezequiel Domabeats — Ingeniería de mezcla y masterización</p>
 </footer>
 
 <script>
+/* ====== CONFIGURACIÓN ====== */
+const WEB3FORMS_KEY='5caeb41a-807b-483a-8336-866506397a41'; // <- pegá acá tu access key de Web3Forms
+
 const S1='Lo primero: tu situación',
       S2='Lo que resuelve tu día a día',
       S3='Pensando a futuro y en vivo';
@@ -385,261 +204,79 @@ const S1='Lo primero: tu situación',
 const yn=(a,b)=>[a,b];
 
 const M=[
-
-{
- n:1,
- s:S1,
- t:'Tarea',
+{n:1,s:S1,t:'Tarea',
  k:'tarea antes que nada defini para que la vas a usar producir in the box grabar voz banda mezcla mastering en vivo filtro',
  b:'Antes que nada, definí para qué la vas a usar. Cada tarea requiere sus propios features y este punto es el filtro que ordena todos los demás.',
- g:[
-  {
-   id:'tarea',
-   l:'Tarea',
-   o:[
-    'Producir in the box',
-    'Grabar Voz',
-    'Grabar Voz + 1 instrumento',
-    'Grabar banda',
-    'Mezcla/mastering',
-    'Procesar voz en vivo'
-   ]
-  }
- ]
-},
+ g:[{id:'tarea',l:'Tarea',o:['Producir in the box','Grabar Voz','Grabar Voz + 1 instrumento','Grabar banda','Mezcla/mastering','Procesar voz en vivo']}]},
 
-{
- n:2,
- s:S1,
- t:'Presupuesto',
+{n:2,s:S1,t:'Presupuesto',
  k:'presupuesto recomendacion inutil modelos pagar escalon de precio usd',
  b:'Sin este dato, cualquier recomendación es inútil. Definilo antes de mirar modelos: te evita enamorarte de una interfaz que no vas a poder pagar, y te ayuda a entender qué se sacrifica en cada escalón de precio.',
- g:[
-  {
-   id:'presupuesto',
-   l:'Presupuesto',
-   o:[
-    'Hasta 500 USD',
-    'Hasta 1000 USD',
-    'Hasta 2000 USD',
-    'Hasta 3000 USD',
-    'Hasta 4000 USD',
-    'Hasta 5000 USD',
-    'Más de 5000 USD'
-   ]
-  }
- ]
-},
+ g:[{id:'presupuesto',l:'Presupuesto',o:['Hasta 300 USD','Hasta 500 USD','Hasta 1000 USD','Hasta 2000 USD','Hasta 3000 USD','Hasta 4000 USD','Hasta 5000 USD','Más de 5000 USD']}]},
 
-{
- n:3,
- s:S2,
- t:'In / Outs',
- tag:'Incluye phantom power',
+{n:3,s:S2,t:'In / Outs',tag:'Incluye phantom power',
  k:'in outs incluye phantom power entradas salidas canales voz beat banda preamps simultaneos microfonos condenser alimentacion phantom +48v xlr plug combo hi-z conectores tipo de entrada auriculares headphones ninguna',
  b:'Cuántas entradas y salidas necesitás según tu tarea: uno o dos canales alcanzan para voz y beat, pero una banda grabando junta necesita varios preamps simultáneos. Si vas a usar micrófonos condenser, revisá también que la interfaz tenga alimentación phantom (+48V) en esas entradas — es un detalle chico que mucha gente olvida chequear y después no puede grabar lo que necesita.',
  g:[
-  {
-   id:'ent14',
-   l:'Entradas 1/4',
-   o:[
-    'Ninguna',
-    ...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))
-   ],
-   c:'grid-cols-2'
-  },
-  {
-   id:'entxlr',
-   l:'Entradas XLR',
-   o:[
-    'Ninguna',
-    ...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))
-   ],
-   c:'grid-cols-2'
-  },
-  {
-   id:'sal14',
-   l:'Salidas 1/4',
-   o:[
-    'Ninguna',
-    ...[2,4,6,8].map(x=>x+' salidas')
-   ],
-   c:'grid-cols-2'
-  },
-  {
-   id:'salxlr',
-   l:'Salidas XLR',
-   o:[
-    'Ninguna',
-    ...[2,4,6,8].map(x=>x+' salidas')
-   ],
-   c:'grid-cols-2'
-  },
-  {
-   id:'aur',
-   l:'Salidas de auriculares',
-   o:[
-    1,2,3,4
-   ].map(x=>x+(x===1?' salida':' salidas')),
-   c:'grid-cols-2'
-  }
+  {id:'ent14',l:'Entradas 1/4',o:['Ninguna',...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))],c:'grid-cols-2'},
+  {id:'entxlr',l:'Entradas XLR',o:['Ninguna',...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))],c:'grid-cols-2'},
+  {id:'sal14',l:'Salidas 1/4',o:['Ninguna',...[2,4,6,8].map(x=>x+' salidas')],c:'grid-cols-2'},
+  {id:'salxlr',l:'Salidas XLR',o:['Ninguna',...[2,4,6,8].map(x=>x+' salidas')],c:'grid-cols-2'},
+  {id:'aur',l:'Salidas de auriculares',o:[1,2,3,4].map(x=>x+(x===1?' salida':' salidas')),c:'grid-cols-2'}
  ],
  two:1,
- x:'No todas las entradas y salidas son iguales. Las XLR están pensadas para micrófonos y suelen tener preamp con phantom power. Las de plug 1/4" reciben instrumentos como guitarra o bajo directos (Hi-Z) o equipos con salida de línea. Las combo aceptan ambos conectores en el mismo lugar, así que contalas en la columna que vayas a usar. Lo mismo vale para las salidas: además de los monitores, puede que quieras salir a hardware externo o a monitoreo por cable balanceado. Contá cuántas necesitás de cada tipo según lo que vayas a grabar al mismo tiempo.'
-},
+ x:'No todas las entradas y salidas son iguales. Las XLR están pensadas para micrófonos y suelen tener preamp con phantom power. Las de plug 1/4" reciben instrumentos como guitarra o bajo directos (Hi-Z) o equipos con salida de línea. Las combo aceptan ambos conectores en el mismo lugar, así que contalas en la columna que vayas a usar. Lo mismo vale para las salidas: además de los monitores, puede que quieras salir a hardware externo o a monitoreo por cable balanceado. Contá cuántas necesitás de cada tipo según lo que vayas a grabar al mismo tiempo.'},
 
-{
- n:4,
- s:S2,
- t:'Calidad de los preamps',
+{n:4,s:S2,t:'Calidad de los preamps',
  k:'calidad de los preamps cuatro entradas buenas ruido coloracion cadena mezcla cantidad de preamps',
  b:'No es lo mismo tener cuatro entradas que tener cuatro entradas buenas. Un preamp de mala calidad mete ruido y coloración desde el primer eslabón de la cadena, y eso es algo que después, en la mezcla, no se puede arreglar del todo.',
- g:[
-  {
-   id:'preamps',
-   l:'Preamps',
-   o:[
-    'Ninguno',
-    ...[1,2,4,6,8].map(x=>x+' preamp')
-   ],
-   c:'grid-cols-2 sm:grid-cols-3'
-  }
- ]
-},
+ g:[{id:'preamps',l:'Preamps',o:['Ninguno',...[1,2,4,6,8].map(x=>x+' preamp')],c:'grid-cols-2 sm:grid-cols-3'}]},
 
-{
- n:5,
- s:S2,
- t:'Procesamiento DSP',
+{n:5,s:S2,t:'Procesamiento DSP',
  k:'procesamiento dsp monitorear senal latencia efectos tiempo real daw reverb compresion grabas',
  b:'Le permite monitorear tu señal de entrada con cero latencia perceptible, aplicando efectos en tiempo real sin pasar por el DAW. Es un plus importante si grabás y necesitás escucharte con reverb o compresión en el momento, sin que la latencia te distraiga.',
- g:[
-  {
-   id:'dsp',
-   l:'Procesamiento DSP',
-   o:yn('Con procesamiento DSP','Sin procesamiento DSP')
-  }
- ]
-},
+ g:[{id:'dsp',l:'Procesamiento DSP',o:yn('Con procesamiento DSP','Sin procesamiento DSP')}]},
 
-{
- n:6,
- s:S2,
- t:'Calidad de conversión (AD/DA)',
+{n:6,s:S2,t:'Calidad de conversión (AD/DA)',
  k:'calidad de conversion ad/da invisible oido fiel grabas escuchas mezclar barata profesional mastering grabacion',
  b:'Es lo más “invisible” para un oído no entrenado, pero es lo que define qué tan fiel es lo que grabás y qué tan fiel es lo que escuchás al mezclar. Acá es donde más se nota la diferencia entre una interfaz barata y una profesional, aunque a simple vista parezcan iguales.',
  x:'Un conversor para mastering suele tener pocas entradas y salidas ya que el presupuesto se destina a la etapa de conversión, mientras que para grabación el presupuesto se destina a incorporar más entradas y salidas con sus respectivos preamplificadores y no tanto en la etapa de conversión.',
- g:[
-  {
-   id:'conversion',
-   l:'Calidad de conversión',
-   o:yn('Calidad para grabación','Calidad para mastering')
-  }
- ]
-},
+ g:[{id:'conversion',l:'Calidad de conversión',o:yn('Calidad para grabación','Calidad para mastering')}]},
 
-{
- n:7,
- s:S3,
- t:'Alimentación y portabilidad',
+{n:7,s:S3,t:'Alimentación y portabilidad',
  k:'alimentacion y portabilidad tocas en vivo grabas afuera estudio usb thunderbolt compu fuente externa tocar otros lugares',
  b:'Si tocás en vivo o grabás afuera de tu estudio, una interfaz que se alimenta directo del USB de tu compu es mucho más práctica que una que necesita fuente externa. Pensalo si tu plan incluye tocar en otros lugares.',
- g:[
-  {
-   id:'alimentacion',
-   l:'Alimentación',
-   o:[
-    'Alimentación USB/ Thunderbolt',
-    'Alimentación externa'
-   ]
-  }
- ]
-},
+ g:[{id:'alimentacion',l:'Alimentación',o:['Alimentación USB/ Thunderbolt','Alimentación externa']}]},
 
-{
- n:8,
- s:S3,
- t:'Expandibilidad (salidas ópticas)',
+{n:8,s:S3,t:'Expandibilidad (salidas ópticas)',
  k:'expandibilidad salidas opticas canales banda bateria crecer',
  b:'Si hoy arrancás con pocos canales pero sabés que en un año vas a sumar una banda o vas a grabar batería, una interfaz con salidas ópticas te deja ampliar tus posibilidades de conexión sin tener que cambiar todo de nuevo.',
- g:[
-  {
-   id:'adat',
-   l:'Expandibilidad',
-   o:[
-    'Con salida óptica',
-    'Sin salida óptica'
-   ]
-  }
- ]
-},
+ g:[{id:'adat',l:'Expandibilidad',o:['Con salida óptica','Sin salida óptica']}]},
 
-{
- n:9,
- s:S3,
- t:'Monitoreo directo sin DAW',
+{n:9,s:S3,t:'Monitoreo directo sin DAW',
  k:'monitoreo directo sin daw perillas software propio mezclar grabando playback latencia graba solo',
  b:'Perillas o software propio de la interfaz para mezclar lo que estás grabando con la pista de playback, sin depender del DAW. Es clave para el que graba solo y necesita escucharse a sí mismo sin latencia.',
- g:[
-  {
-   id:'monitoreo',
-   l:'Monitoreo directo',
-   o:yn('Con monitoreo directo','Sin monitoreo directo')
-  }
- ]
-},
+ g:[{id:'monitoreo',l:'Monitoreo directo',o:yn('Con monitoreo directo','Sin monitoreo directo')}]},
 
-{
- n:10,
- s:S3,
- t:'Loopback',
+{n:10,s:S3,t:'Loopback',
  k:'loopback streaming lives reacciones audio del sistema voz instrumento filtro de compra',
  b:'Si hacés streaming, lives o reacciones donde necesitás capturar el audio del sistema junto con tu voz o instrumento, esta función es un filtro real de compra. Sin loopback, ese flujo de trabajo se complica mucho.',
- g:[
-  {
-   id:'loopback',
-   l:'Loopback',
-   o:yn('Con loopback','Sin loopback')
-  }
- ]
-},
+ g:[{id:'loopback',l:'Loopback',o:yn('Con loopback','Sin loopback')}]},
 
-{
- n:11,
- s:S3,
- t:'Robustez física',
+{n:11,s:S3,t:'Robustez física',
  k:'robustez fisica chasis metalico plastico viaja shows ensayos durabilidad',
  b:'Chasis metálico vs. plástico. Si tu interfaz viaja con vos a shows o ensayos, este punto deja de ser estético y pasa a ser una cuestión de durabilidad real.',
- g:[
-  {
-   id:'chasis',
-   l:'Chasis',
-   o:[
-    'Chasis plástico',
-    'Chasis metálico'
-   ],
-   c:'sm:grid-cols-2'
-  }
- ]
-}
-
+ g:[{id:'chasis',l:'Chasis',o:['Chasis plástico','Chasis metálico'],c:'sm:grid-cols-2'}]}
 ];
 
-const FILTERS={
- estudio:[1,2,4,6,8,9],
- grabacion:[1,3,4,5,6,9],
- vivo:[1,7,11],
- streaming:[10]
-};
+const FILTERS={estudio:[1,2,4,6,8,9],grabacion:[1,3,4,5,6,9],vivo:[1,7,11],streaming:[10]};
 
 const TOTAL=12,
       GROUPS=M.flatMap(m=>m.g.map(g=>({...g,n:m.n})));
 
-let current=0,
-    activeFilter=null;
+let current=0,activeFilter=null,sent=false;
 
-const reviewed=new Set(),
-      sel={};
+const reviewed=new Set(),sel={};
 
 const $=s=>document.querySelector(s),
       $$=s=>[...document.querySelectorAll(s)];
@@ -647,540 +284,204 @@ const $=s=>document.querySelector(s),
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const pad=n=>String(n).padStart(2,'0');
 
-const sidebar=$('#sidebar'),
-      menuBtn=$('#menu-toggle');
+const sidebar=$('#sidebar'),menuBtn=$('#menu-toggle');
 
 $('#nav-list').innerHTML=
-`<li>
- <button type="button"
-         class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]"
-         data-go="0">
-
-  <i data-lucide="book-open"
-     class="w-4 h-4"
-     style="color:#d4a72c"></i>
-
-  <span style="color:#f7f2e7">
-   Introducción
-  </span>
- </button>
-</li>`+
-
-M.map(m=>`
-<li>
- <button type="button"
-         class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]"
-         data-go="${m.n}"
-         data-point="${m.n}">
-
-  <span class="font-bold tabular-nums"
-        style="color:#d4a72c">
-   ${pad(m.n)}
-  </span>
-
-  <span class="flex-1"
-        style="color:#ece7dc">
-   ${m.t}
-  </span>
-
-  <span class="dot"></span>
- </button>
-</li>`).join('')+
-
-`<li>
- <button type="button"
-         class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]"
-         data-go="12">
-
-  <i data-lucide="list-checks"
-     class="w-4 h-4"
-     style="color:#d4a72c"></i>
-
-  <span style="color:#f7f2e7">
-   Resultado del examen
-  </span>
- </button>
-</li>`;
+`<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="0">
+  <i data-lucide="book-open" class="w-4 h-4" style="color:#d4a72c"></i>
+  <span style="color:#f7f2e7">Introducción</span></button></li>`+
+M.map(m=>`<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="${m.n}" data-point="${m.n}">
+  <span class="font-bold tabular-nums" style="color:#d4a72c">${pad(m.n)}</span>
+  <span class="flex-1" style="color:#ece7dc">${m.t}</span>
+  <span class="dot"></span></button></li>`).join('')+
+`<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="12">
+  <i data-lucide="list-checks" class="w-4 h-4" style="color:#d4a72c"></i>
+  <span style="color:#f7f2e7">Tu resultado</span></button></li>`;
 
 const grp=(g,two)=>`
 <fieldset class="mt-6${g.span?' sm:col-span-2':''}">
-
- <legend class="font-bold mb-3"
-         style="color:#6b4d10">
-
-  ${g.l}${g.multi?' <span class="font-normal text-sm">(podés elegir más de una)</span>':''}
-
- </legend>
-
- <div class="grid gap-3 ${two?'grid-cols-1':(g.c||'sm:grid-cols-2')}"
-      role="group"
-      aria-label="${g.l}">
-
-  ${g.o.map(o=>`
-  <button type="button"
-          class="opt"
-          data-g="${g.id}"
-          data-v="${o}"
-          aria-pressed="false">
-   ${o}
-  </button>`).join('')}
-
+ <legend class="font-bold mb-3" style="color:#6b4d10">${g.l}${g.multi?' <span class="font-normal text-sm">(podés elegir más de una)</span>':''}</legend>
+ <div class="grid gap-3 ${two?'grid-cols-1':(g.c||'sm:grid-cols-2')}" role="group" aria-label="${g.l}">
+  ${g.o.map(o=>`<button type="button" class="opt" data-g="${g.id}" data-v="${o}" aria-pressed="false">${o}</button>`).join('')}
  </div>
 </fieldset>`;
 
-const grp2=(g)=>grp({...g,c:''},0)
- .replace('grid gap-3 ',`grid gap-3 ${g.c||""} `);
+const grp2=g=>grp({...g,c:''},0).replace('grid gap-3 ',`grid gap-3 ${g.c||""} `);
 
 $('#modules').innerHTML=M.map(m=>`
-<article class="view"
-         data-view="${m.n}"
-         aria-labelledby="h-${m.n}">
-
+<article class="view" data-view="${m.n}" aria-labelledby="h-${m.n}">
  <div class="card rounded-2xl px-7 sm:px-12 py-10 sm:py-14">
-
-  <p class="eyebrow font-bold"
-     style="color:#8a6414;font-size:12px">
-   ${m.s}
-  </p>
-
-  <p class="bignum font-extrabold mt-6"
-     aria-hidden="true"
-     style="color:#b8891a;font-size:96px">
-   ${pad(m.n)}
-  </p>
-
+  <p class="eyebrow font-bold" style="color:#8a6414;font-size:12px">${m.s}</p>
+  <p class="bignum font-extrabold mt-6" aria-hidden="true" style="color:#b8891a;font-size:96px">${pad(m.n)}</p>
   <div class="flex flex-wrap items-center gap-3 mt-3">
-
-   <h2 id="h-${m.n}"
-       tabindex="-1"
-       class="font-extrabold"
-       style="color:#121212;font-size:24px">
-    ${m.t}
-   </h2>
-
-   ${m.tag?`
-   <span class="eyebrow font-bold px-3 py-1 rounded"
-         style="background:#f0dfb6;color:#6b4d10;font-size:11px">
-    ${m.tag}
-   </span>`:''}
-
+   <h2 id="h-${m.n}" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:24px">${m.t}</h2>
+   ${m.tag?`<span class="eyebrow font-bold px-3 py-1 rounded" style="background:#f0dfb6;color:#6b4d10;font-size:11px">${m.tag}</span>`:''}
   </div>
-
-  <p class="reading mt-5"
-     style="font-size:18px">
-   ${m.b}
-  </p>
-
-  ${m.x?`
-  <p class="reading mt-4"
-     style="font-size:18px">
-   ${m.x}
-  </p>`:''}
-
-  <div class="${m.two?'sm:grid sm:grid-cols-2 sm:gap-8':''}">
-   ${m.g.map(g=>grp2(g)).join('')}
-  </div>
-
-  <button type="button"
-          class="mark-btn mt-8 inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border-2 font-bold"
-          data-mark="${m.n}"
-          aria-pressed="false">
-
+  <p class="reading mt-5" style="font-size:18px">${m.b}</p>
+  ${m.x?`<p class="reading mt-4" style="font-size:18px">${m.x}</p>`:''}
+  <div class="${m.two?'sm:grid sm:grid-cols-2 sm:gap-8':''}">${m.g.map(g=>grp2(g)).join('')}</div>
+  <button type="button" class="mark-btn mt-8 inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border-2 font-bold" data-mark="${m.n}" aria-pressed="false">
    <i data-lucide="check" class="w-4 h-4"></i>
-
-   <span class="off">
-    Marcar como revisado
-   </span>
-
-   <span class="on"
-         style="color:#e3f5e6">
-    Revisado
-   </span>
+   <span class="off">Marcar como revisado</span>
+   <span class="on" style="color:#e3f5e6">Revisado</span>
   </button>
-
  </div>
 </article>`).join('');
 
 $('#exam').innerHTML=GROUPS.map(g=>`
-<li>
- <button type="button"
-         data-go="${g.n}"
-         data-ex="${g.id}"
-         class="w-full text-left flex items-start gap-3 px-3 py-2 min-h-[44px] rounded-lg hover:bg-black/5">
-
-  <span class="ck font-bold text-lg leading-6"
-        aria-hidden="true">
-   ○
-  </span>
-
-  <span class="flex-1">
-
-   <span class="block text-xs font-bold tabular-nums"
-         style="color:#8a6414">
-
-    ${pad(g.n)} · ${g.l}
-
-    <span class="rv"
-          style="color:#1f5a2c"></span>
-   </span>
-
-   <span class="val block"
-         style="font-size:15px"></span>
-
-  </span>
- </button>
-</li>`).join('');
+<li><button type="button" data-go="${g.n}" data-ex="${g.id}" class="w-full text-left flex items-start gap-3 px-3 py-2 min-h-[44px] rounded-lg hover:bg-black/5">
+ <span class="ck font-bold text-lg leading-6" aria-hidden="true">○</span>
+ <span class="flex-1">
+  <span class="block text-xs font-bold tabular-nums" style="color:#8a6414">${pad(g.n)} · ${g.l}<span class="rv" style="color:#1f5a2c"></span></span>
+  <span class="val block" style="font-size:15px"></span>
+ </span></button></li>`).join('');
 
 lucide.createIcons();
 
 function go(i,focus=true){
-
  current=Math.max(0,Math.min(TOTAL,i));
-
- $$('.view').forEach(v=>
-  v.classList.toggle('active',+v.dataset.view===current)
- );
-
+ $$('.view').forEach(v=>v.classList.toggle('active',+v.dataset.view===current));
  $$('#sidebar .nav-item').forEach(b=>{
-
   const on=+b.dataset.go===current;
-
   b.classList.toggle('current',on);
-
-  on
-   ?b.setAttribute('aria-current','step')
-   :b.removeAttribute('aria-current');
+  on?b.setAttribute('aria-current','step'):b.removeAttribute('aria-current');
  });
-
  $('#prev-btn').disabled=current===0;
-
- $('#position').textContent=
-  current===0
-   ?'Introducción'
-   :current===TOTAL
-    ?'Resultado'
-    :`Punto ${pad(current)} de 11`;
-
+ $('#position').textContent=current===0?'Introducción':current===TOTAL?'Resultado':`Punto ${pad(current)} de 11`;
  if(focus){
-
-  const h=document.querySelector(
-   `.view[data-view="${current}"] [tabindex="-1"]`
-  );
-
+  const h=document.querySelector(`.view[data-view="${current}"] [tabindex="-1"]:not(.hidden)`);
   h&&h.focus({preventScroll:true});
-
-  window.scrollTo({
-   top:0,
-   behavior:
-    matchMedia('(prefers-reduced-motion: reduce)').matches
-     ?'auto'
-     :'smooth'
-  });
+  window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
  }
 }
 
 function renderProgress(){
-
  const n=reviewed.size;
-
  $('#progress-fill').style.width=(n/11*100)+'%';
-
- $('#progressbar').setAttribute(
-  'aria-valuenow',
-  n
- );
-
- $('#progress-count').textContent=
-  $('#summary-count').textContent=
-  `${n}/11`;
-
- $$('[data-point]').forEach(el=>
-  el.classList.toggle(
-   'done',
-   reviewed.has(+el.dataset.point)
-  )
- );
-
- $$('[data-mark]').forEach(b=>
-  b.setAttribute(
-   'aria-pressed',
-   String(reviewed.has(+b.dataset.mark))
-  )
- );
-
+ $('#progressbar').setAttribute('aria-valuenow',n);
+ $('#progress-count').textContent=$('#summary-count').textContent=`${n}/11`;
+ $$('[data-point]').forEach(el=>el.classList.toggle('done',reviewed.has(+el.dataset.point)));
+ $$('[data-mark]').forEach(b=>b.setAttribute('aria-pressed',String(reviewed.has(+b.dataset.mark))));
  renderExam();
 }
 
 function renderExam(){
-
  let c=0;
-
  GROUPS.forEach(g=>{
-
-  const row=$(`[data-ex="${g.id}"]`),
-        v=sel[g.id];
-
+  const row=$(`[data-ex="${g.id}"]`),v=sel[g.id];
   if(v)c++;
-
-  row.querySelector('.ck').textContent=
-   v?'✓':'○';
-
-  row.querySelector('.ck').style.color=
-   v?'#1f5a2c':'#6b6255';
-
+  row.querySelector('.ck').textContent=v?'✓':'○';
+  row.querySelector('.ck').style.color=v?'#1f5a2c':'#6b6255';
   const val=row.querySelector('.val');
-
-  val.textContent=
-   v
-    ?(Array.isArray(v)?v.join(', '):v)
-    :'Sin elegir';
-
-  val.style.color=
-   v?'#121212':'#8f877a';
-
-  val.style.fontWeight=
-   v?'700':'400';
-
-  row.querySelector('.rv').textContent=
-   reviewed.has(g.n)
-    ?' · Revisado'
-    :'';
+  val.textContent=v?(Array.isArray(v)?v.join(', '):v):'Sin elegir';
+  val.style.color=v?'#121212':'#8f877a';
+  val.style.fontWeight=v?'700':'400';
+  row.querySelector('.rv').textContent=reviewed.has(g.n)?' · Revisado':'';
  });
-
- $('#chosen-count').textContent=
-  `${c}/${GROUPS.length}`;
-
+ $('#chosen-count').textContent=`${c}/${GROUPS.length}`;
  updatePreview();
 }
 
 function applySearch(){
-
  const q=norm($('#search-input').value.trim());
  const set=activeFilter?FILTERS[activeFilter]:null;
  const any=q||set;
-
  let count=0;
-
  $$('#sidebar .nav-item[data-point]').forEach(b=>{
-
   const p=+b.dataset.point;
-
-  const ok=
-   (!q||norm(M[p-1].k).includes(q))&&
-   (!set||set.includes(p));
-
+  const ok=(!q||norm(M[p-1].k).includes(q))&&(!set||set.includes(p));
   if(ok)count++;
-
-  b.classList.toggle(
-   'match',
-   !!any&&ok
-  );
-
-  b.classList.toggle(
-   'dim',
-   !!any&&!ok
-  );
+  b.classList.toggle('match',!!any&&ok);
+  b.classList.toggle('dim',!!any&&!ok);
  });
-
- $('#match-info').textContent=
-  any
-   ?(
-     count
-      ?`${count} ${count===1?'punto coincide':'puntos coinciden'}`
-      :'Sin coincidencias'
-    )
-   :'';
+ $('#match-info').textContent=any?(count?`${count} ${count===1?'punto coincide':'puntos coinciden'}`:'Sin coincidencias'):'';
 }
 
 function closeMenu(){
-
  sidebar.classList.add('closed');
-
- menuBtn.setAttribute(
-  'aria-expanded',
-  'false'
- );
+ menuBtn.setAttribute('aria-expanded','false');
 }
 
 document.addEventListener('click',e=>{
 
  const o=e.target.closest('.opt');
-
  if(o){
-
-  const id=o.dataset.g,
-        v=o.dataset.v,
-        G=GROUPS.find(x=>x.id===id);
-
+  const id=o.dataset.g,v=o.dataset.v,G=GROUPS.find(x=>x.id===id);
   let was;
-
   if(G.multi){
-
    const a=sel[id]||[];
-
    was=a.includes(v);
-
-   const n=
-    was
-     ?a.filter(x=>x!==v)
-     :[...a,v];
-
-   n.length
-    ?sel[id]=n
-    :delete sel[id];
-
+   const n=was?a.filter(x=>x!==v):[...a,v];
+   n.length?sel[id]=n:delete sel[id];
   }else{
-
    was=sel[id]===v;
-
-   was
-    ?delete sel[id]
-    :sel[id]=v;
+   was?delete sel[id]:sel[id]=v;
   }
-
-  $$(`.opt[data-g="${id}"]`).forEach(b=>
-   b.setAttribute(
-    'aria-pressed',
-    String(
-     G.multi
-      ?(sel[id]||[]).includes(b.dataset.v)
-      :sel[id]===b.dataset.v
-    )
-   )
-  );
-
-  $('#live').textContent=
-   was
-    ?'Selección quitada.'
-    :`Seleccionado: ${v}`;
-
+  $$(`.opt[data-g="${id}"]`).forEach(b=>b.setAttribute('aria-pressed',String(G.multi?(sel[id]||[]).includes(b.dataset.v):sel[id]===b.dataset.v)));
+  $('#live').textContent=was?'Selección quitada.':`Seleccionado: ${v}`;
   renderExam();
-
   return;
  }
 
  const g=e.target.closest('[data-go]');
-
  if(g){
-
   go(+g.dataset.go);
-
-  if(g.closest('#sidebar'))
-   closeMenu();
-
+  if(g.closest('#sidebar'))closeMenu();
   return;
  }
 
  const m=e.target.closest('[data-mark]');
-
  if(m){
-
   const p=+m.dataset.mark;
   const add=!reviewed.has(p);
-
-  add
-   ?reviewed.add(p)
-   :reviewed.delete(p);
-
+  add?reviewed.add(p):reviewed.delete(p);
   renderProgress();
-
-  $('#live').textContent=
-   `Punto ${p} ${add?'marcado como revisado':'desmarcado'}. ${reviewed.size} de 11 revisados.`;
-
-  if(add)
-   go(p+1);
-
+  $('#live').textContent=`Punto ${p} ${add?'marcado como revisado':'desmarcado'}. ${reviewed.size} de 11 revisados.`;
+  if(add)go(p+1);
   return;
  }
 
  const f=e.target.closest('[data-filter]');
-
  if(f){
-
-  activeFilter=
-   activeFilter===f.dataset.filter
-    ?null
-    :f.dataset.filter;
-
-  $$('[data-filter]').forEach(c=>
-   c.setAttribute(
-    'aria-pressed',
-    String(c.dataset.filter===activeFilter)
-   )
-  );
-
+  activeFilter=activeFilter===f.dataset.filter?null:f.dataset.filter;
+  $$('[data-filter]').forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.filter===activeFilter)));
   applySearch();
  }
 });
 
-$('#search-input').addEventListener(
- 'input',
- applySearch
-);
+$('#search-input').addEventListener('input',applySearch);
+$('#search-input').addEventListener('keydown',e=>{
+ if(e.key==='Enter'){
+  e.preventDefault();
+  const f=$('#sidebar .nav-item.match');
+  if(f){go(+f.dataset.go);closeMenu();}
+ }
+});
 
-$('#search-input').addEventListener(
- 'keydown',
- e=>{
+$('#prev-btn').addEventListener('click',()=>go(current-1));
 
-  if(e.key==='Enter'){
+/* ====== CAPTURA DE MAIL ====== */
+const emailIn=$('#email'),sendBtn=$('#send-btn'),gateMsg=$('#gate-msg');
 
-   e.preventDefault();
+const validEmail=()=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailIn.value.trim());
+const updateSend=()=>{sendBtn.disabled=!validEmail();};
 
-   const f=$('#sidebar .nav-item.match');
+emailIn.addEventListener('input',()=>{gateMsg.textContent='';updateSend();});
 
-   if(f){
-
-    go(+f.dataset.go);
-    closeMenu();
-   }
-  }
+function buildChecklist(){
+ const lines=GROUPS.map(g=>{
+  const v=sel[g.id];
+  return `- ${g.l}: ${v?(Array.isArray(v)?v.join(', '):v):'Sin definir'}`;
  });
-
-$('#prev-btn').addEventListener(
- 'click',
- ()=>go(current-1)
-);
-
-$('#reset-btn').addEventListener(
- 'click',
- ()=>{
-
-  reviewed.clear();
-
-  Object.keys(sel).forEach(
-   k=>delete sel[k]
-  );
-
-  $$('.opt').forEach(
-   b=>b.setAttribute(
-    'aria-pressed',
-    'false'
-   )
-  );
-
-  renderProgress();
-
-  $('#live').textContent=
-   'Todo reiniciado.';
- });
+ return `Puntos revisados: ${reviewed.size}/11\n\n${lines.join('\n')}`;
+}
 
 function buildText(){
-
- const c=
-  $('#country').value.trim()||
-  '[escribí tu país]';
-
+ const c=$('#country-copy').value.trim()||'[escribí tu país]';
  const lines=GROUPS.map(g=>{
-
   const v=sel[g.id];
-
-  return `- ${g.l}: ${
-   v
-    ?(Array.isArray(v)?v.join(', '):v)
-    :'Sin definir'
-  }`;
+  return `- ${g.l}: ${v?(Array.isArray(v)?v.join(', '):v):'Sin definir'}`;
  });
-
  return `Hola, estoy eligiendo mi próxima interfaz de audio y necesito que me ayudes a encontrar modelos que se consigan en ${c}. Estas son mis necesidades:
 
 ${lines.join('\n')}
@@ -1188,120 +489,108 @@ ${lines.join('\n')}
 Por favor, recomendame modelos disponibles en ${c} (con precios aproximados, en moneda local o en USD) que cumplan con esto. Explicame por qué cada uno encaja y avisame si algún requisito choca con mi presupuesto.`;
 }
 
-function updatePreview(){
+function updatePreview(){$('#preview').value=buildText();}
+$('#country-copy').addEventListener('input',updatePreview);
 
- $('#preview').value=
-  buildText();
-}
+$('#copy-btn').addEventListener('click',async()=>{
+ const t=buildText();
+ let ok=false;
+ try{await navigator.clipboard.writeText(t);ok=true;}
+ catch(e){
+  const ta=document.createElement('textarea');
+  ta.value=t;ta.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(ta);ta.select();
+  try{ok=document.execCommand('copy');}catch(_){}
+  ta.remove();
+ }
+ const m=$('#copy-msg');
+ m.style.color=ok?'#1f5a2c':'#8a2b1f';
+ m.textContent=ok?'¡Copiado! Pegalo en tu chat de IA.':'No se pudo copiar. Seleccioná el texto de la vista previa.';
+ setTimeout(()=>m.textContent='',4000);
+});
 
-$('#country').addEventListener(
- 'input',
- updatePreview
-);
+$('#gate-form').addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!validEmail()||sent)return;
 
-$('#copy-btn').addEventListener(
- 'click',
- async()=>{
+ const email=emailIn.value.trim();
+ const country=$('#country').value.trim();
 
-  const t=buildText();
-  let ok=false;
+ sendBtn.disabled=true;
+ $('#send-label').textContent='Enviando…';
+ gateMsg.textContent='';
 
-  try{
+ try{
+  const r=await fetch('https://api.web3forms.com/submit',{
+   method:'POST',
+   headers:{'Content-Type':'application/json',Accept:'application/json'},
+   body:JSON.stringify({
+    access_key:WEB3FORMS_KEY,
+    subject:'Nuevo resultado de la guía: '+email,
+    from_name:'Guía de interfaces',
+    email:email,
+    pais:country||'No indicó',
+    checklist:buildChecklist()
+   })
+  });
+  const d=await r.json();
+  if(!d.success)throw new Error('fail');
 
-   await navigator.clipboard.writeText(t);
-   ok=true;
+  sent=true;
+  $('#done-email').textContent=email;
+  $('#country-copy').value=country;
+  updatePreview();
+  $('#gate').classList.add('hidden');
+  $('#done').classList.remove('hidden');
+  $('#live').textContent='Resultado enviado a tu mail.';
+  go(12);
 
-  }catch(e){
+ }catch(err){
+  gateMsg.textContent='No se pudo enviar. Revisá tu conexión y probá de nuevo.';
+  $('#send-label').textContent='Recibir mi resultado';
+  updateSend();
+ }
+});
 
-   const ta=document.createElement('textarea');
+$('#reset-btn').addEventListener('click',()=>{
+ reviewed.clear();
+ Object.keys(sel).forEach(k=>delete sel[k]);
+ $$('.opt').forEach(b=>b.setAttribute('aria-pressed','false'));
+ sent=false;
+ emailIn.value='';
+ $('#country').value='';
+ $('#country-copy').value='';
+ $('#send-label').textContent='Recibir mi resultado';
+ $('#done').classList.add('hidden');
+ $('#gate').classList.remove('hidden');
+ updateSend();
+ renderProgress();
+ $('#live').textContent='Todo reiniciado.';
+ go(0);
+});
 
-   ta.value=t;
-   ta.style.cssText=
-    'position:fixed;opacity:0';
+menuBtn.addEventListener('click',()=>{
+ const open=sidebar.classList.toggle('closed')===false;
+ menuBtn.setAttribute('aria-expanded',String(open));
+});
 
-   document.body.appendChild(ta);
-
-   ta.select();
-
-   try{
-    ok=document.execCommand('copy');
-   }catch(_){}
-
-   ta.remove();
-  }
-
-  const m=$('#copy-msg');
-
-  m.style.color=
-   ok
-    ?'#1f5a2c'
-    :'#8a2b1f';
-
-  m.textContent=
-   ok
-    ?'¡Copiado! Pegalo en tu chat de IA.'
-    :'No se pudo copiar. Seleccioná el texto de la vista previa.';
-
-  setTimeout(
-   ()=>m.textContent='',
-   4000
-  );
- });
-
-menuBtn.addEventListener(
- 'click',
- ()=>{
-
-  const open=
-   sidebar.classList.toggle('closed')===false;
-
-  menuBtn.setAttribute(
-   'aria-expanded',
-   String(open)
-  );
- });
-
-document.addEventListener(
- 'keydown',
- e=>{
-
-  if(e.target.closest('input,textarea'))
-   return;
-
-  if(
-   e.target.closest('.opt')&&
-   ['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)
-  ){
-
-   e.preventDefault();
-
-   const bs=[
-    ...e.target.parentElement.children
-   ];
-
-   const i=
-    bs.indexOf(e.target);
-
-   const d=
-    ['ArrowRight','ArrowDown'].includes(e.key)
-     ?1
-     :-1;
-
-   bs[
-    (i+d+bs.length)%bs.length
-   ].focus();
-
-   return;
-  }
-
-  if(e.key==='ArrowLeft')
-   go(current-1);
- });
+document.addEventListener('keydown',e=>{
+ if(e.target.closest('input,textarea'))return;
+ if(e.target.closest('.opt')&&['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)){
+  e.preventDefault();
+  const bs=[...e.target.parentElement.children];
+  const i=bs.indexOf(e.target);
+  const d=['ArrowRight','ArrowDown'].includes(e.key)?1:-1;
+  bs[(i+d+bs.length)%bs.length].focus();
+  return;
+ }
+ if(e.key==='ArrowLeft')go(current-1);
+});
 
 go(0,false);
 renderProgress();
+updateSend();
 </script>
 
 </body>
 </html>
-```
