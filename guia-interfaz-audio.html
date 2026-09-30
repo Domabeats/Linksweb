@@ -69,7 +69,7 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
 
   <div class="mt-4 rounded-xl border px-4 py-4" style="border-color:#4a443a;background:#1d1d1d">
    <p class="font-bold" style="color:#d4a72c;font-size:13px">¿Tenés dudas sobre algún punto?</p>
-   <p class="mt-1" style="color:#c9c1b2;font-size:13px;line-height:1.55">No pasa nada. Si todavía no estás seguro, podés tocar <strong style="color:#f7f2e7">“Marcar como revisado”</strong> y saltearlo para continuar.</p>
+   <p class="mt-1" style="color:#c9c1b2;font-size:13px;line-height:1.55">No pasa nada. Si todavía no estás seguro, podés tocar <strong style="color:#f7f2e7">“Continuar”</strong> y seguir sin responder.</p>
   </div>
 
   <p id="match-info" class="mt-2 text-sm min-h-[1.25rem]" style="color:#c9c1b2" aria-live="polite"></p>
@@ -321,9 +321,8 @@ $('#modules').innerHTML=M.map(m=>`
   ${m.x?`<p class="reading mt-4" style="font-size:18px">${m.x}</p>`:''}
   <div class="${m.two?'sm:grid sm:grid-cols-2 sm:gap-8':''}">${m.g.map(g=>grp2(g)).join('')}</div>
   <button type="button" class="mark-btn mt-8 inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border-2 font-bold" data-mark="${m.n}" aria-pressed="false">
-   <i data-lucide="check" class="w-4 h-4"></i>
-   <span class="off">Marcar como revisado</span>
-   <span class="on" style="color:#e3f5e6">Revisado</span>
+   Continuar
+   <i data-lucide="arrow-right" class="w-4 h-4"></i>
   </button>
  </div>
 </article>`).join('');
@@ -433,11 +432,10 @@ document.addEventListener('click',e=>{
  const m=e.target.closest('[data-mark]');
  if(m){
   const p=+m.dataset.mark;
-  const add=!reviewed.has(p);
-  add?reviewed.add(p):reviewed.delete(p);
+  reviewed.add(p);
   renderProgress();
-  $('#live').textContent=`Punto ${p} ${add?'marcado como revisado':'desmarcado'}. ${reviewed.size} de 11 revisados.`;
-  if(add)go(p+1);
+  $('#live').textContent=`Punto ${p} revisado. ${reviewed.size} de 11 revisados.`;
+  go(p+1);
   return;
  }
 
