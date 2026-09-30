@@ -216,7 +216,7 @@ const M=[
 
 {n:3,s:S2,t:'In / Outs',tag:'Incluye phantom power',
  k:'in outs incluye phantom power entradas salidas canales voz beat banda preamps simultaneos microfonos condenser alimentacion phantom +48v xlr plug combo hi-z conectores tipo de entrada auriculares headphones ninguna',
- b:'Contá cuántas entradas y salidas necesitás según lo que vayas a grabar al mismo tiempo. Para voz y beat alcanzan 1 o 2 canales; una banda necesita varios. Si usás micrófonos condenser, chequeá que las entradas tengan phantom power (+48V).',
+ b:'Contá cuántas entradas y salidas necesitás según lo que vayas a grabar al mismo tiempo. Por ejemplo, para voz + 1 instrumento solo precisás 2 entradas.',
  g:[
   {id:'ent14',l:'Entradas 1/4',o:['Ninguna',...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))],c:'grid-cols-2'},
   {id:'entxlr',l:'Entradas XLR',o:['Ninguna',...[1,2,4,6,8].map(x=>x+(x===1?' entrada':' entradas'))],c:'grid-cols-2'},
@@ -225,7 +225,7 @@ const M=[
   {id:'aur',l:'Salidas de auriculares',o:[1,2,3,4].map(x=>x+(x===1?' salida':' salidas')),c:'grid-cols-2'}
  ],
  two:1,
- x:'XLR: para micrófonos, con preamp y phantom power. 1/4": para guitarra, bajo o equipos de línea. Las combo aceptan ambos: contalas donde las vayas a usar. En las salidas, sumá las de tus monitores y las de cualquier equipo externo.'},
+ x:'Las entradas XLR son para micrófonos, con preamp y phantom power.<br>Las entradas 1/4" son para guitarra, bajo o equipos de línea.<br><br>Las salidas XLR usualmente son salidas balanceadas para monitores.<br>Las salidas 1/4" también pueden ser para monitores o bien para conectar hardware externo.<br><br>Si usás micrófonos condenser, chequeá que las entradas tengan phantom power (+48V).'},
 
 {n:4,s:S2,t:'Calidad de los preamps',
  k:'calidad de los preamps cuatro entradas buenas ruido coloracion cadena mezcla cantidad de preamps',
