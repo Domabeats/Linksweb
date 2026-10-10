@@ -2,7 +2,7 @@
 <html lang="es-AR"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eligiendo tu próxima interfaz de audio</title>
+<title>Audio-match</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <style>
 :root{--gold:#d4a72c;--line:#2c2a26}
@@ -83,8 +83,8 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
    <!-- PORTADA -->
    <section class="view active" data-view="0" aria-labelledby="h-cover">
     <div class="rounded-2xl px-7 sm:px-12 py-16 sm:py-24" style="background:linear-gradient(160deg,#0d0d0d,#1a1a1a,#6b4d10)">
-     <p class="eyebrow mb-5" style="color:#d4a72c;font-size:13px">Asistente guía para artistas y productores</p>
-     <h1 id="h-cover" tabindex="-1" class="font-extrabold max-w-xl" style="color:#fff;font-size:56px;line-height:1.05">Eligiendo tu próxima interfaz de audio</h1>
+     <h1 id="h-cover" tabindex="-1" class="font-extrabold max-w-xl" style="color:#fff;font-size:56px;line-height:1.05">Audio-match</h1>
+     <p class="eyebrow mt-5" style="color:#d4a72c;font-size:13px;line-height:1.7">Este asistente te ayudará a encontrar tu próxima interfaz de audio</p>
      <p class="mt-6 max-w-lg" style="color:#e8e2d6;font-size:19px;line-height:1.6">11 preguntas clave que te ayudarán a encontrar la interfaz que más se adapta a tus necesidades en el estudio o en vivo.</p>
      <button type="button" data-go="1" class="mt-8 inline-flex items-center gap-2 px-6 py-3 min-h-[48px] rounded-full font-bold hover:brightness-110" style="background:#d4a72c;color:#121212">
       Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -481,15 +481,4 @@ document.addEventListener('keydown',e=>{
   const bs=[...e.target.parentElement.children];
   const i=bs.indexOf(e.target);
   const d=['ArrowRight','ArrowDown'].includes(e.key)?1:-1;
-  bs[(i+d+bs.length)%bs.length].focus();
-  return;
- }
- if(e.key==='ArrowLeft')go(current-1);
-});
-
-go(0,false);
-renderProgress();
-</script>
-
-</body>
-</html>
+  b
