@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es-AR">
 <head>
@@ -21,9 +20,9 @@ body{font-family:'DM Sans',sans-serif;color:#ece7dc;background:#121212}
 .dot{width:10px;height:10px;border-radius:99px;border:2px solid #6b6255;flex:none}
 .nav-item.done .dot{background:var(--gold);border-color:var(--gold)}
 .chip[aria-pressed=true]{background:var(--gold)!important;color:#121212!important}
-.opt{min-height:48px;border-radius:12px;border:2px solid #8a6414;background:#1a1a1a;color:#f7f2e7;padding:12px 16px;text-align:left;font-weight:500;transition:background .15s}
-.opt:hover{background:#2a2416}
-.opt[aria-pressed=true]{background:#d4a72c;color:#121212;border-color:#d4a72c;box-shadow:inset 0 0 0 1px #121212;font-weight:700}
+.opt,.bopt{min-height:48px;border-radius:12px;border:2px solid #8a6414;background:#1a1a1a;color:#f7f2e7;padding:12px 16px;text-align:left;font-weight:500;transition:background .15s}
+.opt:hover,.bopt:hover{background:#2a2416}
+.opt[aria-pressed=true],.bopt[aria-pressed=true]{background:#d4a72c;color:#121212;border-color:#d4a72c;box-shadow:inset 0 0 0 1px #121212;font-weight:700}
 .mark-btn{background:#121212;color:#f7f2e7;border-color:#121212}
 .mark-btn[aria-pressed=true]{background:#1f3a24;border-color:#1f3a24}
 .mark-btn[aria-pressed=true] .off,.mark-btn[aria-pressed=false] .on{display:none}
@@ -105,8 +104,38 @@ Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>
 
 <div id="modules"></div>
 
+<!-- BLOQUE FINAL: MAIL, NOMBRE Y TRES PREGUNTAS -->
+<section class="view" data-view="12" aria-labelledby="h-fin">
+<div class="card rounded-2xl px-7 sm:px-12 py-10 sm:py-14">
+<h2 id="h-fin" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Estamos a un paso de finalizar</h2>
+<p class="reading mt-3" style="color:#4a443a;font-size:17px">Me gustaría conocerte un poco mas, por favor responde estas ultimas tres preguntas para finalizar</p>
+
+<label for="b-mail" class="block mt-6 font-bold" style="color:#6b4d10;font-size:14px">Tu email</label>
+<input id="b-mail" type="email" autocomplete="email" maxlength="120" class="w-full sm:w-96 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2" style="border-color:#8a6414;background:#fff;color:#121212">
+<label class="flex items-start gap-3 mt-3 max-w-xl" style="color:#4a443a;font-size:15px">
+<input id="b-opt" type="checkbox" class="mt-1 w-5 h-5 shrink-0">
+<span>Quiero recibir mails únicamente cuando haya nuevas versiones del asistente</span>
+</label>
+
+<label for="b-name" class="block mt-6 font-bold" style="color:#6b4d10;font-size:14px">Tu nombre</label>
+<input id="b-name" type="text" autocomplete="given-name" maxlength="100" class="w-full sm:w-96 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2" style="border-color:#8a6414;background:#fff;color:#121212">
+
+<div id="bq1"></div>
+<div id="bq2"></div>
+<div id="bq3w">
+<div id="bq3"></div>
+<textarea id="b-otro" rows="3" maxlength="500" aria-label="Otro" class="hidden w-full mt-3 rounded-lg px-3 py-2 border-2" style="border-color:#8a6414;background:#fff;color:#121212"></textarea>
+</div>
+
+<p id="b-err" class="mt-5 font-bold" style="color:#8a2b1f" role="alert"></p>
+<button id="b-send" type="button" class="mt-4 inline-flex items-center gap-2 px-7 py-3 min-h-[52px] rounded-full font-bold hover:brightness-125" style="background:#121212;color:#f7f2e7">
+Finalizar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+</button>
+</div>
+</section>
+
 <!-- RESULTADO -->
-<section class="view" data-view="12" aria-labelledby="h-sum">
+<section class="view" data-view="13" aria-labelledby="h-sum">
 <div class="card rounded-2xl px-7 sm:px-12 py-10">
 
 <h2 id="h-sum" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Tu resultado está listo</h2>
@@ -169,6 +198,8 @@ Ezequiel Domabeats — Instagram <i data-lucide="instagram" class="w-4 h-4"></i>
 
 <script>
 /* ====== CONFIGURACIÓN ====== */
+const ENDPOINT='https://script.google.com/macros/s/AKfycbyJ0oi6Xakj2zvWBIll2L82yHyMd1w9MQ1Hb9N-89ulhKJSNTU_106b_nUKPytm_Mp1/exec';
+
 const S1='Lo primero: tu situación',
 S2='Lo que resuelve tu día a día',
 S3='Pensando a futuro y en vivo';
@@ -243,7 +274,17 @@ g:[{id:'chasis',l:'Chasis',o:['Chasis plástico','Chasis metálico'],c:'sm:grid-
 
 const FILTERS={estudio:[1,2,4,6,8,9],grabacion:[1,3,4,5,6,9],vivo:[1,7,11],streaming:[10]};
 
-const TOTAL=12,
+/* ====== BLOQUE FINAL: PREGUNTAS DEL TALLY (TEXTUALES) ====== */
+const BQ1='¿Qué lugar ocupa la música en tu vida?',
+Q1=['Me dedico a tiempo completo','Estoy empezando a vivir de esto','Me gustaría vivir de esto','Hago música para mí'],
+BQ2='¿A qué te dedicás?',
+Q2=['Artista independiente','Artista, trabajo con un sello.','Productor musical.','Ingeniero de mezcla y/o masterización.'],
+BQ3='¿Cuál es el principal problema que estás intentando resolver AHORA MISMO?',
+Q3=['Mi sonido: Quiero que mis canciones suenen top, al nivel de mis colegas en la industria.','Falta de claridad: Mi productor y yo no estamos de acuerdo sobre cómo deberían sonar mis canciones.','Necesito delegar tareas técnicas como mezcla y/o mastering con un profesional.','Quiero producir mis canciones completamente por mi cuenta pero aún no tengo el conocimiento técnico necesario.','Necesito mejorar tener mis mezclas y masters terminados en menos tiempo','Otro'];
+const B={q1:'',q2:'',q3:''};
+let submitted=false;
+
+const TOTAL=13,
 GROUPS=M.flatMap(m=>m.g.map(g=>({...g,n:m.n})));
 
 let current=0,activeFilter=null;
@@ -261,7 +302,7 @@ const sidebar=$('#sidebar'),menuBtn=$('#menu-toggle');
 $('#nav-list').innerHTML=
 `<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="0"> <i data-lucide="book-open" class="w-4 h-4" style="color:#d4a72c"></i> <span style="color:#f7f2e7">Introducción</span></button></li>`+
 M.map(m=>`<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="${m.n}" data-point="${m.n}"> <span class="font-bold tabular-nums" style="color:#d4a72c">${pad(m.n)}</span> <span class="flex-1" style="color:#ece7dc">${m.t}</span> <span class="dot"></span></button></li>`).join('')+
-`<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="12"> <i data-lucide="list-checks" class="w-4 h-4" style="color:#d4a72c"></i> <span style="color:#f7f2e7">Tu resultado</span></button></li>`;
+`<li><button type="button" class="nav-item w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 min-h-[44px]" data-go="13"> <i data-lucide="list-checks" class="w-4 h-4" style="color:#d4a72c"></i> <span style="color:#f7f2e7">Tu resultado</span></button></li>`;
 
 const grp=(g,two)=>`<fieldset class="mt-6${g.span?' sm:col-span-2':''}"> <legend class="font-bold mb-3" style="color:#6b4d10">${g.l}${g.multi?' <span class="font-normal text-sm">(podés elegir más de una)</span>':''}</legend> <div class="grid gap-3 ${two?'grid-cols-1':(g.c||'sm:grid-cols-2')}" role="group" aria-label="${g.l}"> ${g.o.map(o=>`<button type="button" class="opt" data-g="${g.id}" data-v="${o}" aria-pressed="false">${o}</button>`).join('')} </div> </fieldset>`;
 
@@ -271,9 +312,22 @@ $('#modules').innerHTML=M.map(m=>`<article class="view" data-view="${m.n}" aria-
 
 $('#exam').innerHTML=GROUPS.map(g=>`<li><button type="button" data-go="${g.n}" data-ex="${g.id}" class="w-full text-left flex items-start gap-3 px-3 py-2 min-h-[44px] rounded-lg hover:bg-black/5"> <span class="ck font-bold text-lg leading-6" aria-hidden="true">○</span> <span class="flex-1"> <span class="block text-xs font-bold tabular-nums" style="color:#8a6414">${pad(g.n)} · ${g.l}<span class="rv" style="color:#1f5a2c"></span></span> <span class="val block" style="font-size:15px"></span> </span></button></li>`).join('');
 
+const bq=(k,t,a)=>`<div class="mt-8"><label for="bs-${k}" class="block font-bold mb-3" style="color:#121212;font-size:18px">${t}</label><select id="bs-${k}" data-b="${k}" class="bsel w-full rounded-lg px-3 py-3 min-h-[48px] border-2" style="border-color:#8a6414;background:#fff;color:#121212"><option value="" selected disabled>Elegí una opción</option>${a.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`;
+$('#bq1').innerHTML=bq('q1',BQ1,Q1);
+$('#bq2').innerHTML=bq('q2',BQ2,Q2);
+$('#bq3').innerHTML=bq('q3',BQ3,Q3);
+
 lucide.createIcons();
 
+function bUpdate(){
+const hide=B.q1==='Hago música para mí';
+$('#bq3w').classList.toggle('hidden',hide);
+if(hide){B.q3='';$('#bs-q3').selectedIndex=0;}
+$('#b-otro').classList.toggle('hidden',B.q3!=='Otro');
+}
+
 function go(i,focus=true){
+if(i>=TOTAL&&!submitted)i=12;
 current=Math.max(0,Math.min(TOTAL,i));
 
 $$('.view').forEach(v=>v.classList.toggle('active',+v.dataset.view===current));
@@ -286,7 +340,7 @@ on?b.setAttribute('aria-current','step'):b.removeAttribute('aria-current');
 
 $('#prev-btn').disabled=current===0;
 $('#prev-btn').style.display=current===0?'none':'';
-$('#position').textContent=current===0?'Introducción':current===TOTAL?'Resultado':`Punto ${pad(current)} de 11`;
+$('#position').textContent=current===0?'Introducción':current===12?'Último paso':current===TOTAL?'Resultado':`Punto ${pad(current)} de 11`;
 
 if(focus){
 const h=document.querySelector(`.view[data-view="${current}"] [tabindex="-1"]:not(.hidden)`);
@@ -391,6 +445,11 @@ applySearch();
 }
 });
 
+document.addEventListener('change',e=>{
+const s=e.target.closest('.bsel');
+if(s){B[s.dataset.b]=s.value;bUpdate();}
+});
+
 $('#search-input').addEventListener('input',applySearch);
 $('#search-input').addEventListener('keydown',e=>{
 if(e.key==='Enter'){
@@ -401,6 +460,28 @@ if(f){go(+f.dataset.go);closeMenu();}
 });
 
 $('#prev-btn').addEventListener('click',()=>go(current-1));
+
+/* ====== ENVÍO DEL BLOQUE A LA PLANILLA ====== */
+$('#b-send').addEventListener('click',()=>{
+const email=$('#b-mail').value.trim(),err=$('#b-err'),hide=B.q1==='Hago música para mí';
+if(!/^[^\s@=+\-][^\s@]*@[^\s@]+\.[^\s@]{2,}$/.test(email)){err.textContent='Escribí un email válido.';$('#b-mail').focus();return;}
+if(!B.q1||!B.q2||(!hide&&!B.q3)){err.textContent='Respondé las preguntas para continuar.';return;}
+err.textContent='';
+const d={
+email:email,
+pais:'',
+checklist:GROUPS.map(g=>{const v=sel[g.id];return g.l+': '+(v?(Array.isArray(v)?v.join(', '):v):'Sin definir');}).join(' | '),
+nombre:$('#b-name').value.trim(),
+pregunta1:B.q1,
+pregunta2:B.q2,
+pregunta3:B.q3,
+otro:B.q3==='Otro'?$('#b-otro').value.trim():'',
+mails:$('#b-opt').checked?'Sí':'No'
+};
+try{fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}).catch(()=>{});}catch(_){}
+submitted=true;
+go(13);
+});
 
 /* ====== PROMPT Y COPIAR ====== */
 function buildText(){
@@ -440,6 +521,11 @@ $('#reset-btn').addEventListener('click',()=>{
 reviewed.clear();
 Object.keys(sel).forEach(k=>delete sel[k]);
 $$('.opt').forEach(b=>b.setAttribute('aria-pressed','false'));
+$$('.bsel').forEach(s=>s.selectedIndex=0);
+B.q1=B.q2=B.q3='';submitted=false;
+$('#b-mail').value=$('#b-name').value=$('#b-otro').value='';
+$('#b-opt').checked=false;$('#b-err').textContent='';
+bUpdate();
 $('#country-copy').value='';
 renderProgress();
 $('#live').textContent='Todo reiniciado.';
@@ -452,7 +538,7 @@ menuBtn.setAttribute('aria-expanded',String(open));
 });
 
 document.addEventListener('keydown',e=>{
-if(e.target.closest('input,textarea'))return;
+if(e.target.closest('input,textarea,select'))return;
 if(e.target.closest('.opt')&&['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(e.key)){
 e.preventDefault();
 const bs=[...e.target.parentElement.children];
