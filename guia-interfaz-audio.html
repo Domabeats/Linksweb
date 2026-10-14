@@ -104,7 +104,7 @@ Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>
 
 <div id="modules"></div>
 
-<!-- BLOQUE FINAL: MAIL, NOMBRE Y TRES PREGUNTAS -->
+<!-- BLOQUE FINAL: MAIL, NOMBRE, PAÍS Y TRES PREGUNTAS -->
 <section class="view" data-view="12" aria-labelledby="h-fin">
 <div class="card rounded-2xl px-7 sm:px-12 py-10 sm:py-14">
 <h2 id="h-fin" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Estamos a un paso de finalizar</h2>
@@ -120,6 +120,9 @@ Comenzar <i data-lucide="arrow-right" class="w-4 h-4"></i>
 <label for="b-name" class="block mt-6 font-bold" style="color:#6b4d10;font-size:14px">Tu nombre</label>
 <input id="b-name" type="text" autocomplete="given-name" maxlength="100" class="w-full sm:w-96 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2" style="border-color:#8a6414;background:#fff;color:#121212">
 
+<label for="b-country" class="block mt-6 font-bold" style="color:#6b4d10;font-size:14px">Tu país (para buscar modelos disponibles donde vivís)</label>
+<input id="b-country" type="text" autocomplete="country-name" placeholder="Ej.: Argentina" maxlength="60" class="w-full sm:w-96 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2" style="border-color:#8a6414;background:#fff;color:#121212">
+
 <div id="bq1"></div>
 <div id="bq2"></div>
 <div id="bq3w">
@@ -134,41 +137,27 @@ Finalizar <i data-lucide="arrow-right" class="w-4 h-4"></i>
 </div>
 </section>
 
-<!-- RESULTADO -->
+<!-- RESULTADO: pantalla de paso mientras se abre la búsqueda -->
 <section class="view" data-view="13" aria-labelledby="h-sum">
 <div class="card rounded-2xl px-7 sm:px-12 py-10">
 
-<h2 id="h-sum" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Tu resultado está listo</h2>
+<h2 id="h-sum" tabindex="-1" class="font-extrabold" style="color:#121212;font-size:26px">Buscando tu match…</h2>
+<p class="reading mt-3" style="color:#4a443a;font-size:17px">En unos segundos se abre la búsqueda con las interfaces que mejor encajan con vos. Si no se abre sola, tocá el botón.</p>
 
-<!-- Se conservan estos contadores para que funcione la lógica existente -->
+<!-- Se conservan estos contadores y la lista oculta para que funcione la lógica existente -->
 <span id="summary-count" class="hidden">0/11</span>
 <span id="chosen-count" class="hidden">0/0</span>
-
-<!-- RESPUESTAS OCULTAS: SE CONSERVAN PARA QUE FUNCIONE EL CÓDIGO ORIGINAL -->
 <ul id="exam" class="hidden"></ul>
 
-<!-- COPIAR Y PEGAR EN TU IA FAVORITA -->
-<div class="mt-8 pt-6 border-t" style="border-color:#d9d0bd">
-<h3 class="font-extrabold" style="color:#121212;font-size:18px">Llevate tu resultado a tu IA favorita</h3>
-<p class="mt-1" style="color:#4a443a;font-size:15px">Copiá el prompt y pegalo en ChatGPT o en tu IA favorita para que te ayude a encontrar modelos disponibles en tu país.</p>
+<a id="open-link" href="#" rel="noopener" class="mt-6 inline-flex items-center gap-2 px-7 py-3 min-h-[52px] rounded-full font-bold hover:brightness-125" style="background:#121212;color:#f7f2e7">
+Buscar mi match <i data-lucide="external-link" class="w-4 h-4"></i>
+</a>
 
-<label for="country-copy" class="block mt-4 font-bold" style="color:#6b4d10;font-size:14px">Tu país (opcional)</label>
-<input id="country-copy" type="text" autocomplete="country-name" placeholder="Ej.: Argentina" class="w-full sm:w-72 mt-1 rounded-lg px-3 py-2 min-h-[44px] border-2" style="border-color:#8a6414;background:#fff;color:#121212">
-
-<div class="flex flex-wrap items-center gap-3 mt-5">
-<button id="copy-btn" type="button" class="inline-flex items-center gap-2 px-7 py-3 min-h-[52px] rounded-full font-bold hover:brightness-125" style="background:#121212;color:#f7f2e7">
-<i data-lucide="copy" class="w-4 h-4"></i> COPIAR Y PEGAR EN TU IA FAVORITA
-</button>
-<span id="copy-msg" class="font-medium" style="color:#1f5a2c" role="status" aria-live="polite"></span>
-</div>
-
-<label for="preview" class="block mt-6 font-bold" style="color:#6b4d10;font-size:14px">Prompt para copiar</label>
-<textarea id="preview" readonly rows="9" class="w-full mt-1 rounded-lg px-3 py-2 border-2" style="border-color:#d9d0bd;background:#fff;color:#2a2723;font-size:14px"></textarea>
-</div>
-
+<div>
 <button id="reset-btn" type="button" class="mt-8 inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full border-2 font-bold hover:brightness-95" style="background:#f7f2e7;color:#121212;border-color:#121212">
 <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reiniciar todo
 </button>
+</div>
 </div>
 </section>
 
@@ -365,7 +354,6 @@ val.style.fontWeight=v?'700':'400';
 row.querySelector('.rv').textContent=reviewed.has(g.n)?' · Revisado':'';
 });
 $('#chosen-count').textContent=`${c}/${GROUPS.length}`;
-updatePreview();
 }
 
 function applySearch(){
@@ -452,15 +440,37 @@ if(f){go(+f.dataset.go);closeMenu();}
 
 $('#prev-btn').addEventListener('click',()=>go(current-1));
 
-/* ====== ENVÍO DEL BLOQUE A LA PLANILLA ====== */
-$('#b-send').addEventListener('click',()=>{
+/* ====== PROMPT Y LINK A PERPLEXITY ====== */
+function buildText(){
+const c=$('#b-country').value.trim();
+const lugar=c?c:'mi país';
+const lines=GROUPS.map(g=>{
+const v=sel[g.id];
+return `- ${g.l}: ${v?(Array.isArray(v)?v.join(', '):v):'Sin definir'}`;
+});
+return `Hola, estoy eligiendo mi próxima interfaz de audio y necesito que me ayudes a encontrar modelos que se consigan en ${lugar}. Estas son mis necesidades:
+
+${lines.join('\n')}
+
+Por favor, buscá en la web y recomendame modelos disponibles en ${lugar} (con precios aproximados, en moneda local o en USD) que cumplan con esto. Explicame por qué cada uno encaja y avisame si algún requisito choca con mi presupuesto.`;
+}
+
+function searchUrl(){
+return 'https://www.perplexity.ai/search?q='+encodeURIComponent(buildText());
+}
+
+/* ====== FINALIZAR: GUARDA EN LA PLANILLA Y ABRE LA BÚSQUEDA AUTOMÁTICAMENTE ====== */
+$('#b-send').addEventListener('click',async()=>{
+const btn=$('#b-send');
 const email=$('#b-mail').value.trim(),err=$('#b-err'),hide=B.q1==='Hago música para mí';
 if(!/^[^\s@=+\-][^\s@]*@[^\s@]+\.[^\s@]{2,}$/.test(email)){err.textContent='Escribí un email válido.';$('#b-mail').focus();return;}
 if(!B.q1||!B.q2||(!hide&&!B.q3)){err.textContent='Respondé las preguntas para continuar.';return;}
 err.textContent='';
+btn.disabled=true;
+
 const d={
 email:email,
-pais:'',
+pais:$('#b-country').value.trim(),
 checklist:GROUPS.map(g=>{const v=sel[g.id];return g.l+': '+(v?(Array.isArray(v)?v.join(', '):v):'Sin definir');}).join(' | '),
 nombre:$('#b-name').value.trim(),
 pregunta1:B.q1,
@@ -469,43 +479,17 @@ pregunta3:B.q3,
 otro:B.q3==='Otro'?$('#b-otro').value.trim():'',
 mails:$('#b-opt').checked?'Sí':'No'
 };
-try{fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}).catch(()=>{});}catch(_){}
+
+const url=searchUrl();
+$('#open-link').href=url;
 submitted=true;
 go(13);
-});
 
-/* ====== PROMPT Y COPIAR ====== */
-function buildText(){
-const c=$('#country-copy').value.trim()||'[escribí tu país]';
-const lines=GROUPS.map(g=>{
-const v=sel[g.id];
-return `- ${g.l}: ${v?(Array.isArray(v)?v.join(', '):v):'Sin definir'}`;
-});
-return `Hola, estoy eligiendo mi próxima interfaz de audio y necesito que me ayudes a encontrar modelos que se consigan en ${c}. Estas son mis necesidades:
-
-${lines.join('\n')}
-
-Por favor, recomendame modelos disponibles en ${c} (con precios aproximados, en moneda local o en USD) que cumplan con esto. Explicame por qué cada uno encaja y avisame si algún requisito choca con mi presupuesto.`;
-}
-
-function updatePreview(){$('#preview').value=buildText();}
-$('#country-copy').addEventListener('input',updatePreview);
-
-$('#copy-btn').addEventListener('click',async()=>{
-const t=buildText();
-let ok=false;
-try{await navigator.clipboard.writeText(t);ok=true;}
-catch(e){
-const ta=document.createElement('textarea');
-ta.value=t;ta.style.cssText='position:fixed;opacity:0';
-document.body.appendChild(ta);ta.select();
-try{ok=document.execCommand('copy');}catch(_){}
-ta.remove();
-}
-const m=$('#copy-msg');
-m.style.color=ok?'#1f5a2c':'#8a2b1f';
-m.textContent=ok?'¡Copiado! Pegalo en tu chat de IA.':'No se pudo copiar. Seleccioná el texto de la vista previa.';
-setTimeout(()=>m.textContent='',4000);
+/* Se espera a que los datos salgan hacia la planilla (máx. 1,5 s) y recién ahí se abre Perplexity */
+const send=fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}).catch(()=>{});
+await Promise.race([send,new Promise(r=>setTimeout(r,1500))]);
+btn.disabled=false;
+window.location.href=url;
 });
 
 $('#reset-btn').addEventListener('click',()=>{
@@ -514,10 +498,9 @@ Object.keys(sel).forEach(k=>delete sel[k]);
 $$('.opt').forEach(b=>b.setAttribute('aria-pressed','false'));
 $$('.bsel').forEach(s=>s.selectedIndex=0);
 B.q1=B.q2=B.q3='';submitted=false;
-$('#b-mail').value=$('#b-name').value=$('#b-otro').value='';
+$('#b-mail').value=$('#b-name').value=$('#b-country').value=$('#b-otro').value='';
 $('#b-opt').checked=false;$('#b-err').textContent='';
 bUpdate();
-$('#country-copy').value='';
 renderProgress();
 $('#live').textContent='Todo reiniciado.';
 go(0);
